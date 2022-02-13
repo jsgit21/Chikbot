@@ -169,7 +169,10 @@ client.on("messageCreate", function(message) {
                 }
                 client.query(sql, function (err, result) {
                     if (err) throw err;
-                    console.log(result['rows'][0]);
+                    for (let row of result.rows) {
+                        console.log(JSON.stringify(row));
+                    }
+                    //console.log(result['rows'][0]);
 
                     if (result['rows'].length != 0) {
                         var userinfo = result['rows'][0];
@@ -183,6 +186,8 @@ client.on("messageCreate", function(message) {
                             message.reply(`The user **${commandFlag}** was not found in the Wordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Wordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
                         }
                     }
+
+                    client.end();
                 });
             });
         }
@@ -246,7 +251,11 @@ client.on("messageCreate", function(message) {
             
             client.query(query,scoreAdder, function (err, result) {
                 if (err) throw err;
-                console.log(result);
+                for (let row of result.rows) {
+                    console.log(JSON.stringify(row));
+                }
+                //console.log(result);
+                client.end();
             });
         });
           
