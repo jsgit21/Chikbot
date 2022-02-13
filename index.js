@@ -48,15 +48,17 @@ client.on("messageCreate", function(message) {
         console.log("splitFlags: ", splitFlags);
         const commandBody = splitFlags[0].slice(prefix.length).toLowerCase();
 
-        const regx = new RegExp('[\'\":;\.]');
         var commandFlag = splitFlags[1]
-        if(typeof commandFlag != 'undefined') {
-            commandFlag = commandFlag.replace(regx,"")
-        }
-
         console.log("prefix: ", prefix);
         console.log("Body: ", commandBody);
         console.log("Flag: ", commandFlag);
+
+        if(typeof commandFlag != 'undefined') {
+            if(!(/^([a-zA-Z0-9 ]*)$/.test(commandFlag))) {
+                message.channel.send("Sorry, this is invalid use of this command, please see $commands.");
+                return;
+            }
+        }
 
         if(commandBody === "ping") {
             const timeTaken = Math.abs(Date.now() - message.createdTimestamp);
