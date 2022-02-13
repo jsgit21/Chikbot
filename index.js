@@ -1,7 +1,7 @@
 require('dotenv').config(); //initialize dotenv
 const Discord = require('discord.js'); //import discord.js
 const fetch = require('node-fetch'); //import node fetch
-var mysql = require('mysql');
+const { Client } = require('pg');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
@@ -148,30 +148,26 @@ client.on("messageCreate", function(message) {
                 }
             }
 
-            const con = mysql.createConnection({
-                host: 'localhost',
-                user: 'admin',
-                password: 'chikenadmin',
-                database: "chickbotdb",
-                debug : false
-            });
+            //Uses default .ENV parameters specified in .ENV file
+            //https://node-postgres.com/features/connecting
+            const client = new Client();
     
-            con.connect(function(err) {
+            client.connect(function(err) {
                 if (err) throw err;
                 console.log("Connected!");
 
                 if (commandFlag == '') {
-                    var sql = `SELECT * FROM wordle WHERE userid=${userID}`;
+                    var sql = `SELECT * FROM wordle WHERE userid='${userID}'`;
                 }
                 else {
                     var sql = `SELECT * FROM wordle WHERE name='${commandFlag}'`;
                 }
-                con.query(sql, function (err, result) {
+                client.query(sql, function (err, result) {
                     if (err) throw err;
-                    //console.log(result);
+                    console.log(result['rows'][0]);
 
-                    if (result.length != 0) {
-                        var userinfo = result[0];
+                    if (result['rows'].length != 0) {
+                        var userinfo = result['rows'][0];
                         message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${userinfo.one}\nTWO --- ${userinfo.two}\nTHREE - ${userinfo.three}\nFOUR -- ${userinfo.four}\nFIVE -- ${userinfo.five}\nSIX --- ${userinfo.six}\n\`\`\`\`\`\`fix\nTotal played = ${userinfo.total}\n\`\`\``)
                     }
                     else {
@@ -228,21 +224,19 @@ client.on("messageCreate", function(message) {
             console.log(scoreAdder)
         }
 
-        const con = mysql.createConnection({
-            host: 'localhost',
-            user: 'admin',
-            password: 'chikenadmin',
-            database: "chickbotdb",
-            debug : false
-        });
+        //Uses default .ENV parameters specified in .ENV file
+        //https://node-postgres.com/features/connecting
+        const client = new Client();
 
-        con.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected!");
-        var sql = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE one=one+${scoreAdder[0]}, two=two+${scoreAdder[1]}, three=three+${scoreAdder[2]}, four=four+${scoreAdder[3]}, five=five+${scoreAdder[4]}, six=six+${scoreAdder[5]}, total=total+1`;
-            con.query(sql,scoreAdder, function (err, result) {
+        client.connect(function(err) {
+            if (err) throw err;
+            console.log("Connected!");
+            
+            var query = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ON CONFLICT (userid) DO UPDATE SET one=wordle.one+${scoreAdder[0]}, two=wordle.two+${scoreAdder[1]}, three=wordle.three+${scoreAdder[2]}, four=wordle.four+${scoreAdder[3]}, five=wordle.five+${scoreAdder[4]}, six=wordle.six+${scoreAdder[5]}, total=wordle.total+1`;
+            
+            client.query(query,scoreAdder, function (err, result) {
                 if (err) throw err;
-                console.log("fin");
+                console.log(result);
             });
         });
           
