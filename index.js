@@ -130,123 +130,123 @@ client.on("messageCreate", function(message) {
 
             
         }
-        else if (commandBody == "wordlestats") {
-            var badActors = [];
-            var userID = message.author.id;
+        // else if (commandBody == "wordlestats") {
+        //     var badActors = [];
+        //     var userID = message.author.id;
 
-            //Get full username if search user flags are passed
-            const commandFlag = getFullUsername(splitFlags);
-            //console.log("CommandFlag: ", commandFlag);
-            if(commandFlag != '') {
-                if(commandFlag.length > 32) {
-                    message.channel.send("Sorry, this name is too long to be a discord name.");
-                    return;
-                }
-                else if(!validName(commandFlag)) {
-                    message.channel.send("Sorry, this is invalid use of this command, please see $commands.");
-                    return;
-                }
-            }
+        //     //Get full username if search user flags are passed
+        //     const commandFlag = getFullUsername(splitFlags);
+        //     //console.log("CommandFlag: ", commandFlag);
+        //     if(commandFlag != '') {
+        //         if(commandFlag.length > 32) {
+        //             message.channel.send("Sorry, this name is too long to be a discord name.");
+        //             return;
+        //         }
+        //         else if(!validName(commandFlag)) {
+        //             message.channel.send("Sorry, this is invalid use of this command, please see $commands.");
+        //             return;
+        //         }
+        //     }
 
-            const con = mysql.createConnection({
-                host: 'localhost',
-                user: 'admin',
-                password: 'chikenadmin',
-                database: "chickbotdb",
-                debug : false
-            });
+        //     const con = mysql.createConnection({
+        //         host: 'localhost',
+        //         user: 'admin',
+        //         password: 'chikenadmin',
+        //         database: "chickbotdb",
+        //         debug : false
+        //     });
     
-            con.connect(function(err) {
-                if (err) throw err;
-                console.log("Connected!");
+        //     con.connect(function(err) {
+        //         if (err) throw err;
+        //         console.log("Connected!");
 
-                if (commandFlag == '') {
-                    var sql = `SELECT * FROM wordle WHERE userid=${userID}`;
-                }
-                else {
-                    var sql = `SELECT * FROM wordle WHERE name='${commandFlag}'`;
-                }
-                con.query(sql, function (err, result) {
-                    if (err) throw err;
-                    //console.log(result);
+        //         if (commandFlag == '') {
+        //             var sql = `SELECT * FROM wordle WHERE userid=${userID}`;
+        //         }
+        //         else {
+        //             var sql = `SELECT * FROM wordle WHERE name='${commandFlag}'`;
+        //         }
+        //         con.query(sql, function (err, result) {
+        //             if (err) throw err;
+        //             //console.log(result);
 
-                    if (result.length != 0) {
-                        var userinfo = result[0];
-                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${userinfo.one}\nTWO --- ${userinfo.two}\nTHREE - ${userinfo.three}\nFOUR -- ${userinfo.four}\nFIVE -- ${userinfo.five}\nSIX --- ${userinfo.six}\n\`\`\`\`\`\`fix\nTotal played = ${userinfo.total}\n\`\`\``)
-                    }
-                    else {
-                        if (commandFlag == '') {
-                            message.reply(`You were not found in the Wordle database.\nBegin playing Wordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
-                        }
-                        else {
-                            message.reply(`The user **${commandFlag}** was not found in the Wordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Wordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
-                        }
-                    }
-                });
-            });
-        }
+        //             if (result.length != 0) {
+        //                 var userinfo = result[0];
+        //                 message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${userinfo.one}\nTWO --- ${userinfo.two}\nTHREE - ${userinfo.three}\nFOUR -- ${userinfo.four}\nFIVE -- ${userinfo.five}\nSIX --- ${userinfo.six}\n\`\`\`\`\`\`fix\nTotal played = ${userinfo.total}\n\`\`\``)
+        //             }
+        //             else {
+        //                 if (commandFlag == '') {
+        //                     message.reply(`You were not found in the Wordle database.\nBegin playing Wordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
+        //                 }
+        //                 else {
+        //                     message.reply(`The user **${commandFlag}** was not found in the Wordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Wordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
+        //                 }
+        //             }
+        //         });
+        //     });
+        // }
     }
 
-    // Check for wordle score submission
-    else if (message.content.match(wordleRegex)){
-        var userID = message.author.id;
-        var username = message.author.username;
+    // Check for wordle score submission -- COMMENTED OUT TILL I CAN GET DB RUNNING LIVE ON HOSTED SERVER
+    // else if (message.content.match(wordleRegex)){
+    //     var userID = message.author.id;
+    //     var username = message.author.username;
 
-        //userID = '159518215104495617';
-        //username = 'Beleti';
+    //     //userID = '159518215104495617';
+    //     //username = 'Beleti';
 
-        var scoreAdder = [0, 0, 0, 0, 0, 0, 1, userID, username];
-        wordleHeader = message.content.split(' ');
-        wordleScore = wordleHeader[2].split('\n')[0];
-        rawScore = wordleScore[0]
-        console.log(rawScore);
-        //console.log(message.content.split('\n'))
+    //     var scoreAdder = [0, 0, 0, 0, 0, 0, 1, userID, username];
+    //     wordleHeader = message.content.split(' ');
+    //     wordleScore = wordleHeader[2].split('\n')[0];
+    //     rawScore = wordleScore[0]
+    //     console.log(rawScore);
+    //     //console.log(message.content.split('\n'))
 
-        var numBlockRows;
-        if (rawScore == 'X' || rawScore == 'x') {
-            rawScore = rawScore.toLowerCase();
-            numBlockRows = 'x';
-        }
-        else {
-            checkBlockRows = message.content.split('\n');
-            numBlockRows = checkBlockRows.length - 2;
-        }
+    //     var numBlockRows;
+    //     if (rawScore == 'X' || rawScore == 'x') {
+    //         rawScore = rawScore.toLowerCase();
+    //         numBlockRows = 'x';
+    //     }
+    //     else {
+    //         checkBlockRows = message.content.split('\n');
+    //         numBlockRows = checkBlockRows.length - 2;
+    //     }
 
-        console.log("num block rows ", numBlockRows);
-        console.log("rawScore ", rawScore);
+    //     console.log("num block rows ", numBlockRows);
+    //     console.log("rawScore ", rawScore);
 
-        if (numBlockRows != rawScore) {
-            console.log("something went wrong with score input");
-            return;
-        }
-        else {
+    //     if (numBlockRows != rawScore) {
+    //         console.log("something went wrong with score input");
+    //         return;
+    //     }
+    //     else {
 
-            if (rawScore != 'x') {
-                scoreAdder[rawScore-1] = 1;
-            }
+    //         if (rawScore != 'x') {
+    //             scoreAdder[rawScore-1] = 1;
+    //         }
 
-            console.log(scoreAdder)
-        }
+    //         console.log(scoreAdder)
+    //     }
 
-        const con = mysql.createConnection({
-            host: 'localhost',
-            user: 'admin',
-            password: 'chikenadmin',
-            database: "chickbotdb",
-            debug : false
-        });
+    //     const con = mysql.createConnection({
+    //         host: 'localhost',
+    //         user: 'admin',
+    //         password: 'chikenadmin',
+    //         database: "chickbotdb",
+    //         debug : false
+    //     });
 
-        con.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected!");
-        var sql = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE one=one+${scoreAdder[0]}, two=two+${scoreAdder[1]}, three=three+${scoreAdder[2]}, four=four+${scoreAdder[3]}, five=five+${scoreAdder[4]}, six=six+${scoreAdder[5]}, total=total+1`;
-            con.query(sql,scoreAdder, function (err, result) {
-                if (err) throw err;
-                console.log("fin");
-            });
-        });
+    //     con.connect(function(err) {
+    //     if (err) throw err;
+    //     console.log("Connected!");
+    //     var sql = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE one=one+${scoreAdder[0]}, two=two+${scoreAdder[1]}, three=three+${scoreAdder[2]}, four=four+${scoreAdder[3]}, five=five+${scoreAdder[4]}, six=six+${scoreAdder[5]}, total=total+1`;
+    //         con.query(sql,scoreAdder, function (err, result) {
+    //             if (err) throw err;
+    //             console.log("fin");
+    //         });
+    //     });
           
-    }
+    // }
 });
 
 //make sure this line is the last line
