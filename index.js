@@ -150,7 +150,12 @@ client.on("messageCreate", function(message) {
 
             //Uses default .ENV parameters specified in .ENV file
             //https://node-postgres.com/features/connecting
-            const client = new Client();
+            const client = new Client({
+                connectionString: process.env.DATABASE_URL,
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            });
     
             client.connect(function(err) {
                 if (err) throw err;
@@ -226,7 +231,12 @@ client.on("messageCreate", function(message) {
 
         //Uses default .ENV parameters specified in .ENV file
         //https://node-postgres.com/features/connecting
-        const client = new Client();
+        const client = new Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                rejectUnauthorized: false
+            }
+        });
 
         client.connect(function(err) {
             if (err) throw err;
