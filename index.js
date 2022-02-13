@@ -17,6 +17,34 @@ function commandsToString(commands) {
     return printout;
 }
 
+function validName(name) {
+    //console.log("Valid name check...");
+    if(!(/^([a-zA-Z0-9 ]*)$/.test(name))) {
+        //console.log("Valid name, false");
+        return false;
+    }
+    //console.log("Valid name, true");
+    return true;
+}
+
+function getFullUsername(givenFlags) {
+    var commandFlag = "";
+
+    if (givenFlags.length >= 32) {
+        //Return name over 32 to hit name length exception check
+        return "commandFlagcommandFlagcommandFlag";
+    }
+
+    for (i = 0; i < givenFlags.length; i++) {
+        commandFlag = commandFlag + givenFlags[i];
+        //Prevent adding space after username
+        if (i != givenFlags.length-1) {
+            commandFlag = commandFlag + " ";
+        }
+    }
+    return commandFlag;
+}
+
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
 
 const prefix = "$";
@@ -44,21 +72,12 @@ client.on("messageCreate", function(message) {
     "941756769154252820" && channelId !== wordlechat) return;
 
     if (message.content.startsWith(prefix)) {
-        const splitFlags = message.content.split(" ");
+        var splitFlags = message.content.split(" ");
         console.log("splitFlags: ", splitFlags);
-        const commandBody = splitFlags[0].slice(prefix.length).toLowerCase();
-
-        var commandFlag = splitFlags[1]
-        console.log("prefix: ", prefix);
-        console.log("Body: ", commandBody);
-        console.log("Flag: ", commandFlag);
-
-        if(typeof commandFlag != 'undefined') {
-            if(!(/^([a-zA-Z0-9 ]*)$/.test(commandFlag))) {
-                message.channel.send("Sorry, this is invalid use of this command, please see $commands.");
-                return;
-            }
-        }
+        const commandBody = splitFlags[0].replace("$","").toLowerCase();
+        //Remove command body - splitFlags now contains only argument flags
+        splitFlags.splice(0,1);
+        console.log("splitFlags: ", splitFlags);
 
         if(commandBody === "ping") {
             const timeTaken = Math.abs(Date.now() - message.createdTimestamp);
@@ -112,7 +131,23 @@ client.on("messageCreate", function(message) {
             
         }
         else if (commandBody == "wordlestats") {
+            var badActors = [];
             var userID = message.author.id;
+
+            //Get full username if search user flags are passed
+            const commandFlag = getFullUsername(splitFlags);
+            //console.log("CommandFlag: ", commandFlag);
+            if(commandFlag != '') {
+                if(commandFlag.length > 32) {
+                    message.channel.send("Sorry, this name is too long to be a discord name.");
+                    return;
+                }
+                else if(!validName(commandFlag)) {
+                    message.channel.send("Sorry, this is invalid use of this command, please see $commands.");
+                    return;
+                }
+            }
+
             const con = mysql.createConnection({
                 host: 'localhost',
                 user: 'admin',
@@ -125,7 +160,7 @@ client.on("messageCreate", function(message) {
                 if (err) throw err;
                 console.log("Connected!");
 
-                if (typeof commandFlag == 'undefined') {
+                if (commandFlag == '') {
                     var sql = `SELECT * FROM wordle WHERE userid=${userID}`;
                 }
                 else {
@@ -140,7 +175,7 @@ client.on("messageCreate", function(message) {
                         message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${userinfo.one}\nTWO --- ${userinfo.two}\nTHREE - ${userinfo.three}\nFOUR -- ${userinfo.four}\nFIVE -- ${userinfo.five}\nSIX --- ${userinfo.six}\n\`\`\`\`\`\`fix\nTotal played = ${userinfo.total}\n\`\`\``)
                     }
                     else {
-                        if (typeof commandFlag == 'undefined') {
+                        if (commandFlag == '') {
                             message.reply(`You were not found in the Wordle database.\nBegin playing Wordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
                         }
                         else {
@@ -156,6 +191,9 @@ client.on("messageCreate", function(message) {
     else if (message.content.match(wordleRegex)){
         var userID = message.author.id;
         var username = message.author.username;
+
+        //userID = '159518215104495617';
+        //username = 'Beleti';
 
         var scoreAdder = [0, 0, 0, 0, 0, 0, 1, userID, username];
         wordleHeader = message.content.split(' ');
