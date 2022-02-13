@@ -49,7 +49,10 @@ client.on("messageCreate", function(message) {
         const commandBody = splitFlags[0].slice(prefix.length).toLowerCase();
 
         const regx = new RegExp('[\'\":;\.]');
-        const commandFlag = splitFlags[1].replace(regx,"")
+        var commandFlag = splitFlags[1]
+        if(typeof commandFlag != 'undefined') {
+            commandFlag = commandFlag.replace(regx,"")
+        }
 
         console.log("prefix: ", prefix);
         console.log("Body: ", commandBody);
