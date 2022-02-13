@@ -198,10 +198,6 @@ client.on("messageCreate", function(message) {
         var userID = message.author.id;
         var username = message.author.username;
 
-        //userID = '159518215104495617';
-        //username = 'Beleti';
-
-        var scoreAdder = [0, 0, 0, 0, 0, 0, 1, userID, username];
         wordleHeader = message.content.split(' ');
         wordleScore = wordleHeader[2].split('\n')[0];
         rawScore = wordleScore[0]
@@ -217,6 +213,26 @@ client.on("messageCreate", function(message) {
             checkBlockRows = message.content.split('\n');
             numBlockRows = checkBlockRows.length - 2;
         }
+
+        console.log("checkblockrows ", checkBlockRows);
+        if (checkBlockRows[1].startsWith("ADD ")) {
+            console.log("Lets add a new user: ");
+            var addinfo = checkBlockRows[1].split(" ");
+            console.log("addinfo: ", addinfo);
+            if (addinfo.length != 3) {
+                console.log("ADD requires 3 parameters");
+                return;
+            }
+            if (addinfo[1].length != 18) {
+                console.log("2nd Parameter USERID needs to be 18 chars");
+                return;
+            }
+            userID = addinfo[1];
+            username = addinfo[2];
+        }
+
+        var scoreAdder = [0, 0, 0, 0, 0, 0, 1, userID, username];
+        console.log("scoreAdder: ", scoreAdder);
 
         console.log("num block rows ", numBlockRows);
         console.log("rawScore ", rawScore);
