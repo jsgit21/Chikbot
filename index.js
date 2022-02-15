@@ -244,7 +244,7 @@ client.on("messageCreate", function(message) {
                         }
                         var displaybar = []
                         for (i = 0; i < 6; i++) {
-                            numofx = (nums[i]/biggest)*12;
+                            numofx = (nums[i]/biggest)*16;
                             displaybar[i] = '>'.repeat(numofx);
                             displaybar[i] = displaybar[i] + " ";
                         }
