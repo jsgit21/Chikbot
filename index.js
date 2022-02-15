@@ -67,7 +67,7 @@ function msTillWordleReset() {
     wordleReset.setHours(19,0,0,0);
     var timeNow = new Date().getTime()
     var offsetMs
-    if (wordleReset > timeNow) {
+    if (wordleReset < timeNow) {
         console.log("wordlereset > timenow")
         wordleReset.setDate(wordleReset.getDate() + 1);
     }
