@@ -65,7 +65,7 @@ let count = 0;
 
 function msTillWordleReset() {
     var wordleReset = new Date();
-    wordleReset.setHours(5,45,0,0);
+    wordleReset.setHours(5,0,0,0);
     var timeNow = new Date().getTime()
     var offsetMs
     if (wordleReset < timeNow) {
@@ -82,7 +82,7 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle DB, time to reset!");
-    client.channels.cache.get('940720249454608414').send('Wordle has been reset for EST and scores can be submitted again!');
+    client.channels.cache.get('940720249454608414').send('Wordle has been reset (EST) and scores may be submitted again, hooray!');
 
     const con = new Client({
         connectionString: process.env.DATABASE_URL,
