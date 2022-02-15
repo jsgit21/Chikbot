@@ -191,6 +191,9 @@ client.on("messageCreate", function(message) {
                 });
             });
         }
+        else if (commandBody == "rules") {
+            message.channel.send("This database is being hosted for free on Heroku with limitations on the number of entries. This is for fun, please do not abuse the score system or you will be removed from it.")
+        }
     }
 
     // Check for wordle score submission
@@ -270,7 +273,7 @@ client.on("messageCreate", function(message) {
                 for (let row of result.rows) {
                     console.log(JSON.stringify(row));
                 }
-                message.channel.send(`Thanks ${username} - Your score has been recorded. This database is being hosted for free on Heroku with limitations on number of entries. This is for fun, please do not abuse the score system or you will be removed from it.You can use **$wordlestats** to see your score distribution. See **$commands** for more details.`);
+                message.channel.send(`Thanks ${username} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
                 //console.log(result);
                 client.end();
             });
