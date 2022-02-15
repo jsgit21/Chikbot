@@ -318,7 +318,9 @@ client.on("messageCreate", function(message) {
         console.log("rawScore ", rawScore);
 
         if (numBlockRows != rawScore) {
-            console.log("something went wrong with score input");
+            console.log("The length of the message was not as expected for this score");
+            message.channel.send("Your score was not properly submitted. Please paste your Wordle score without any extra content added to the message.")
+
             return;
         }
         else {
