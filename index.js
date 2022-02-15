@@ -62,11 +62,51 @@ const commandList = {
 const laz = ["We don't take kindly to llamas round these parts...","Hey! What did I say llama boy", "No seriously, stop it", "You're starting to really get on my nerves", "Excuse me, what do you think this is?","Sir, this is a llama free zone", "Ok really im gonna need you to stop.", "Stop.", "Stop...", "STOP IT", "LLAMA!!!!!!", "I'm going to Alt+F4 myself", "This is bullshit.", "@Chiken dude can you fucking stop this guy?", "alright, fuck this!"];
 let count = 0;
 
-function tensec() {
+function msTillWordleReset() {
+    var wordleReset = new Date();
+    wordleReset.setHours(20,11,0,0);
+    var timeNow = new Date().getTime()
+    var offsetMs
+    if (wordleReset < timeNow) {
+        wordleReset.setDate(wordleReset.getDate() + 1);
+    }
+    offsetMs = wordleReset - timeNow;
+    console.log("wordleReset: ", wordleReset);
+    console.log("timenow: ", timeNow);
+    console.log("offset: ", offsetMs/(1000*60*60),"hrs");
+    return offsetMs;
 }
 
-console.log("MORNING!!!");
-//setTimeout(tensec, 10000);
+function resetWordleDB() {
+    console.log("Resetting wordle DB, time to reset!");
+
+    const client = new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+            rejectUnauthorized: false
+        }
+    });
+
+    client.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected!");
+        var sql = `UPDATE wordle SET playedtoday = FALSE;`;
+        client.query(sql, function (err, result) {
+            if (err) throw err;
+            for (let row of result.rows) {
+                console.log(JSON.stringify(row));
+            }
+            client.end();
+        });
+    });
+
+    var waitTimeMS = msTillWordleReset();
+    setTimeout(resetWordleDB, waitTimeMS);
+
+}
+
+var waitTimeMS = msTillWordleReset();
+setTimeout(resetWordleDB, waitTimeMS);
 
 client.on("messageCreate", function(message) {
     //Ignore bot messages
@@ -240,7 +280,7 @@ client.on("messageCreate", function(message) {
             username = addinfo[2];
         }
 
-        var scoreAdder = [0, 0, 0, 0, 0, 0, 1, userID, username];
+        var scoreAdder = [0, 0, 0, 0, 0, 0, 1, userID, username, 't'];
         console.log("scoreAdder: ", scoreAdder);
 
         console.log("num block rows ", numBlockRows);
@@ -271,8 +311,22 @@ client.on("messageCreate", function(message) {
         client.connect(function(err) {
             if (err) throw err;
             console.log("Connected!");
+
+            var query = `SELECT * FROM wordle WHERE userid='${userID}'`;
             
-            var query = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) ON CONFLICT (userid) DO UPDATE SET one=wordle.one+${scoreAdder[0]}, two=wordle.two+${scoreAdder[1]}, three=wordle.three+${scoreAdder[2]}, four=wordle.four+${scoreAdder[3]}, five=wordle.five+${scoreAdder[4]}, six=wordle.six+${scoreAdder[5]}, total=wordle.total+1`;
+            client.query(query, function (err, result) {
+                if (err) throw err;
+                var playerstats = result['rows'][0];
+                console.log(playerstats);
+
+                if (playerstats.playedtoday) {
+                    message.channel.send(`Sorry ${username} - It looks like you've already submitted a Wordle score today.`);
+                    client.end();
+                    return;
+                }
+            });
+            
+            query = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET one=wordle.one+${scoreAdder[0]}, two=wordle.two+${scoreAdder[1]}, three=wordle.three+${scoreAdder[2]}, four=wordle.four+${scoreAdder[3]}, five=wordle.five+${scoreAdder[4]}, six=wordle.six+${scoreAdder[5]}, total=wordle.total+1, playedtoday='t'`;
             
             client.query(query,scoreAdder, function (err, result) {
                 if (err) throw err;
