@@ -326,18 +326,19 @@ client.on("messageCreate", function(message) {
                         return;
                     }
                 }
-            });
+
+                query = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET one=wordle.one+${scoreAdder[0]}, two=wordle.two+${scoreAdder[1]}, three=wordle.three+${scoreAdder[2]}, four=wordle.four+${scoreAdder[3]}, five=wordle.five+${scoreAdder[4]}, six=wordle.six+${scoreAdder[5]}, total=wordle.total+1, playedtoday='t'`;
             
-            query = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET one=wordle.one+${scoreAdder[0]}, two=wordle.two+${scoreAdder[1]}, three=wordle.three+${scoreAdder[2]}, four=wordle.four+${scoreAdder[3]}, five=wordle.five+${scoreAdder[4]}, six=wordle.six+${scoreAdder[5]}, total=wordle.total+1, playedtoday='t'`;
-            
-            client.query(query,scoreAdder, function (err, result) {
-                if (err) throw err;
-                for (let row of result.rows) {
-                    console.log(JSON.stringify(row));
-                }
-                message.channel.send(`Thanks ${username} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
-                //console.log(result);
-                client.end();
+                client.query(query,scoreAdder, function (err, result) {
+                    if (err) throw err;
+                    for (let row of result.rows) {
+                        console.log(JSON.stringify(row));
+                    }
+                    message.channel.send(`Thanks ${username} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
+                    //console.log(result);
+                    client.end();
+                });
+
             });
         });
           
