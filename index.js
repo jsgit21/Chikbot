@@ -117,6 +117,11 @@ client.on("messageCreate", function(message) {
     //Ignore bot messages
     if (message.author.bot) return;
 
+    if (message.author.username == "dkirk/ David") {
+        message.channel.send(message.content);
+        return;
+    }
+
     const channelId = message.channel.id;
     const wordlechat = "940720249454608414";
     if (channelId !== "941770101672267808" && channelId !== 
@@ -247,9 +252,6 @@ client.on("messageCreate", function(message) {
         }
         else if (commandBody == "breakchikbot") {
             message.channel.send("Attempting to kick player from friends chat...");
-        }
-        else if (message.author.username == "dkirk/ David") {
-            message.channel.send(message.content);
         }
     }
 
