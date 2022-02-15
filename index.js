@@ -232,7 +232,23 @@ client.on("messageCreate", function(message) {
 
                     if (result['rows'].length != 0) {
                         var userinfo = result['rows'][0];
-                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${userinfo.one}\nTWO --- ${userinfo.two}\nTHREE - ${userinfo.three}\nFOUR -- ${userinfo.four}\nFIVE -- ${userinfo.five}\nSIX --- ${userinfo.six}\n\`\`\`\`\`\`fix\nTotal played = ${userinfo.total}\n\`\`\``)
+                        
+                        var biggest = 1;
+                        var gameswon = 0;
+                        var nums = [userinfo.one, userinfo.two, userinfo.three, userinfo.four, userinfo.five, userinfo.six];
+                        for (i = 0; i < 6; i++) {
+                            gameswon = gameswon + nums[i];
+                            if (nums[i] > biggest) {
+                                biggest = nums[i];
+                            }
+                        }
+                        var displaybar = []
+                        for (i = 0; i < 6; i++) {
+                            displaybar[i] = 'X'.repeat((nums[i]/biggest)*12);
+                        }
+                        var gameslost = userinfo.total - gameswon;
+
+                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${displaybar[0]} ${userinfo.one}\nTWO --- ${displaybar[1]} ${userinfo.two}\nTHREE - ${displaybar[2]} ${userinfo.three}\nFOUR -- ${displaybar[3]} ${userinfo.four}\nFIVE -- ${displaybar[4]} ${userinfo.five}\nSIX --- ${displaybar[5]} ${userinfo.six}\n\`\`\`\`\`\`fix\nGames lost = ${gameslost}\nTotal played = ${userinfo.total}\n\`\`\``)
                     }
                     else {
                         if (commandFlag == '') {
