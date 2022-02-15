@@ -64,7 +64,7 @@ let count = 0;
 
 function msTillWordleReset() {
     var wordleReset = new Date();
-    wordleReset.setHours(20,11,0,0);
+    wordleReset.setHours(0,0,0,0);
     var timeNow = new Date().getTime()
     var offsetMs
     if (wordleReset < timeNow) {
@@ -79,6 +79,7 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle DB, time to reset!");
+    client.channels.get('CHANNEL ID').send('Hello here!');
 
     const client = new Client({
         connectionString: process.env.DATABASE_URL,
