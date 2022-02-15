@@ -232,7 +232,7 @@ client.on("messageCreate", function(message) {
 
                     if (result['rows'].length != 0) {
                         var userinfo = result['rows'][0];
-                        
+
                         var biggest = 1;
                         var gameswon = 0;
                         var nums = [userinfo.one, userinfo.two, userinfo.three, userinfo.four, userinfo.five, userinfo.six];
@@ -244,11 +244,16 @@ client.on("messageCreate", function(message) {
                         }
                         var displaybar = []
                         for (i = 0; i < 6; i++) {
-                            displaybar[i] = 'X'.repeat((nums[i]/biggest)*12);
+                            numofx = (nums[i]/biggest)*12;
+                            displaybar[i] = 'X'.repeat(numofx);
+
+                            if (numofx != 0) {
+                                displaybar[i] = displaybar[i] + " ";
+                            }
                         }
                         var gameslost = userinfo.total - gameswon;
 
-                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${displaybar[0]} ${userinfo.one}\nTWO --- ${displaybar[1]} ${userinfo.two}\nTHREE - ${displaybar[2]} ${userinfo.three}\nFOUR -- ${displaybar[3]} ${userinfo.four}\nFIVE -- ${displaybar[4]} ${userinfo.five}\nSIX --- ${displaybar[5]} ${userinfo.six}\n\`\`\`\`\`\`fix\nGames lost = ${gameslost}\nTotal played = ${userinfo.total}\n\`\`\``)
+                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\nONE --- ${displaybar[0]}${userinfo.one}\nTWO --- ${displaybar[1]}${userinfo.two}\nTHREE - ${displaybar[2]}${userinfo.three}\nFOUR -- ${displaybar[3]}${userinfo.four}\nFIVE -- ${displaybar[4]}${userinfo.five}\nSIX --- ${displaybar[5]}${userinfo.six}\n\`\`\`\`\`\`fix\nGames lost = ${gameslost}\nTotal played = ${userinfo.total}\n\`\`\``)
                     }
                     else {
                         if (commandFlag == '') {
