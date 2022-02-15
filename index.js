@@ -64,11 +64,15 @@ let count = 0;
 
 function msTillWordleReset() {
     var wordleReset = new Date();
-    wordleReset.setHours(0,0,0,0);
+    wordleReset.setHours(24,0,0,0);
     var timeNow = new Date().getTime()
     var offsetMs
     if (wordleReset > timeNow) {
+        console.log("wordlereset > timenow")
         wordleReset.setDate(wordleReset.getDate() + 1);
+    }
+    else {
+        console.log("wordlereset < timenow")
     }
     offsetMs = wordleReset - timeNow;
     console.log("wordleReset: ", wordleReset);
@@ -79,6 +83,7 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle DB, time to reset!");
+    return;
     client.channels.get('CHANNEL ID').send('Hello here!');
 
     const client = new Client({
