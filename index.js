@@ -65,7 +65,7 @@ let count = 0;
 
 function msTillWordleReset() {
     var wordleReset = new Date();
-    wordleReset.setHours(5,0,0,0);
+    wordleReset.setHours(5,30,0,0);
     var timeNow = new Date().getTime()
     var offsetMs
     if (wordleReset < timeNow) {
@@ -84,7 +84,7 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle DB, time to reset!");
-    client.channels.get('940720249454608414').send('Wordle has been reset for EST and scores can be submitted again!');
+    //client.channels.get('940720249454608414').send('Wordle has been reset for EST and scores can be submitted again!');
 
     const client = new Client({
         connectionString: process.env.DATABASE_URL,
@@ -96,7 +96,7 @@ function resetWordleDB() {
     client.connect(function(err) {
         if (err) throw err;
         console.log("Connected!");
-        var sql = `UPDATE wordle SET playedtoday = FALSE;`;
+        var sql = `UPDATE wordle SET playedtoday = 'f'`;
         client.query(sql, function (err, result) {
             if (err) throw err;
             for (let row of result.rows) {
@@ -107,12 +107,12 @@ function resetWordleDB() {
     });
 
     var waitTimeMS = msTillWordleReset();
-    setTimeout(resetWordleDB, waitTimeMS);
+    setTimeout(resetWordleDB(), waitTimeMS);
 
 }
 
 var waitTimeMS = msTillWordleReset();
-setTimeout(resetWordleDB, waitTimeMS);
+setTimeout(resetWordleDB(), waitTimeMS);
 
 client.on("messageCreate", function(message) {
     //Ignore bot messages
