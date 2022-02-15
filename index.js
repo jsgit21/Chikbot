@@ -63,12 +63,10 @@ const laz = ["We don't take kindly to llamas round these parts...","Hey! What di
 let count = 0;
 
 function tensec() {
-    console.log("10 sec passed!");
-    setTimeout(tensec, 10000);
 }
 
 console.log("MORNING!!!");
-setTimeout(tensec, 10000);
+//setTimeout(tensec, 10000);
 
 client.on("messageCreate", function(message) {
     //Ignore bot messages
