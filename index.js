@@ -250,7 +250,7 @@ client.on("messageCreate", function(message) {
                         }
                         var gameslost = userinfo.total - gameswon;
 
-                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`fix\n${userinfo.name}\n\`\`\`\`\`\`prolog\n1/6 ->${displaybar[0]}${userinfo.one}\n2/6 ->${displaybar[1]}${userinfo.two}\n3/6 ->${displaybar[2]}${userinfo.three}\n4/6 ->${displaybar[3]}${userinfo.four}\n5/6 ->${displaybar[4]}${userinfo.five}\n6/6 ->${displaybar[5]}${userinfo.six}\n\`\`\`\`\`\`fix\nGames lost = ${gameslost}\nTotal played = ${userinfo.total}\n\`\`\``)
+                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`py\n@ ${userinfo.name}\n\`\`\`\`\`\`prolog\n1/6 ->${displaybar[0]}${userinfo.one}\n2/6 ->${displaybar[1]}${userinfo.two}\n3/6 ->${displaybar[2]}${userinfo.three}\n4/6 ->${displaybar[3]}${userinfo.four}\n5/6 ->${displaybar[4]}${userinfo.five}\n6/6 ->${displaybar[5]}${userinfo.six}\n\`\`\`\`\`\`prolog\nGames Lost = ${gameslost}\nTotal Played = ${userinfo.total}\n\`\`\``)
                     }
                     else {
                         if (commandFlag == '') {
