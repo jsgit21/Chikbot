@@ -245,6 +245,12 @@ client.on("messageCreate", function(message) {
         else if (commandBody == "rules") {
             message.channel.send("This database is being hosted for free on Heroku with limitations on the number of entries. This is for fun, please do not abuse the score system or you will be removed from it.")
         }
+        else if (commandBody == "breakchikbot") {
+            message.channel.send("Attempting to kick player from friends chat...");
+        }
+        else if (message.author.username == "dkirk/ David") {
+            message.channel.send(message.content);
+        }
     }
 
     // Check for wordle score submission
