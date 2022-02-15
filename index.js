@@ -319,10 +319,12 @@ client.on("messageCreate", function(message) {
                 var playerstats = result['rows'][0];
                 console.log(playerstats);
 
-                if (playerstats.playedtoday) {
-                    message.channel.send(`Sorry ${username} - It looks like you've already submitted a Wordle score today.`);
-                    client.end();
-                    return;
+                if (result['rows'].length != 0) {
+                    if (playerstats.playedtoday) {
+                        message.channel.send(`Sorry ${username} - It looks like you've already submitted a Wordle score today.`);
+                        client.end();
+                        return;
+                    }
                 }
             });
             
