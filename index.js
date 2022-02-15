@@ -319,7 +319,7 @@ client.on("messageCreate", function(message) {
 
         if (numBlockRows != rawScore) {
             console.log("The length of the message was not as expected for this score");
-            message.channel.send("Your score was not properly submitted. Please paste your Wordle score without any extra content added to the message.")
+            message.channel.reply("Your score was not properly submitted. Please paste your Wordle score without any extra content added to the message.")
 
             return;
         }
@@ -354,7 +354,7 @@ client.on("messageCreate", function(message) {
 
                 if (result['rows'].length != 0) {
                     if (playerstats.playedtoday) {
-                        message.channel.send(`Sorry ${username} - It looks like you've already submitted a Wordle score today.`);
+                        message.channel.reply(`Sorry ${username} - It looks like you've already submitted a Wordle score today.`);
                         client.end();
                         return;
                     }
@@ -367,7 +367,7 @@ client.on("messageCreate", function(message) {
                     for (let row of result.rows) {
                         console.log(JSON.stringify(row));
                     }
-                    message.channel.send(`Thanks ${username} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
+                    message.channel.reply(`Thanks ${username} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
                     //console.log(result);
                     client.end();
                 });
