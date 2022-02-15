@@ -62,7 +62,12 @@ const commandList = {
 const laz = ["We don't take kindly to llamas round these parts...","Hey! What did I say llama boy", "No seriously, stop it", "You're starting to really get on my nerves", "Excuse me, what do you think this is?","Sir, this is a llama free zone", "Ok really im gonna need you to stop.", "Stop.", "Stop...", "STOP IT", "LLAMA!!!!!!", "I'm going to Alt+F4 myself", "This is bullshit.", "@Chiken dude can you fucking stop this guy?", "alright, fuck this!"];
 let count = 0;
 
-console.log("HEEELLLOOOO!!!");
+function tensec() {
+    console.log("10 sec passed!");
+}
+
+console.log("MORNING!!!");
+setTimeout(tensec, 10000);
 
 client.on("messageCreate", function(message) {
     //Ignore bot messages
