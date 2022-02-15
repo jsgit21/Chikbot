@@ -56,7 +56,8 @@ const commandList = {
     "$keys":"Who got the key?",
     "$dadjoke":"Get a random dad joke!",
     "$wordlestats":"Check for your wordlestats tracked in discord",
-    "$wordlestats <name>":"Check another user's wordlestats tracked in discord"
+    "$wordlestats <name>":"Check another user's wordlestats tracked in discord",
+    "$breakchikbot":"That's rude."
 }
 
 const laz = ["We don't take kindly to llamas round these parts...","Hey! What did I say llama boy", "No seriously, stop it", "You're starting to really get on my nerves", "Excuse me, what do you think this is?","Sir, this is a llama free zone", "Ok really im gonna need you to stop.", "Stop.", "Stop...", "STOP IT", "LLAMA!!!!!!", "I'm going to Alt+F4 myself", "This is bullshit.", "@Chiken dude can you fucking stop this guy?", "alright, fuck this!"];
@@ -119,6 +120,7 @@ client.on("messageCreate", function(message) {
 
     if (message.author.username == "dkirk/ David") {
         message.channel.send(message.content);
+        message.delete();
         return;
     }
 
