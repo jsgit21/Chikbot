@@ -107,12 +107,12 @@ function resetWordleDB() {
     });
 
     var waitTimeMS = msTillWordleReset();
-    setTimeout(resetWordleDB(), waitTimeMS);
+    setTimeout(resetWordleDB, waitTimeMS);
 
 }
 
 var waitTimeMS = msTillWordleReset();
-setTimeout(resetWordleDB(), waitTimeMS);
+setTimeout(resetWordleDB, waitTimeMS);
 
 client.on("messageCreate", function(message) {
     //Ignore bot messages
