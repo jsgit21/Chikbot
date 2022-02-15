@@ -64,6 +64,7 @@ let count = 0;
 
 function tensec() {
     console.log("10 sec passed!");
+    setTimeout(tensec, 10000);
 }
 
 console.log("MORNING!!!");
