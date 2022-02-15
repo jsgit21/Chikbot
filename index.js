@@ -83,8 +83,7 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle DB, time to reset!");
-    return;
-    client.channels.get('CHANNEL ID').send('Hello here!');
+    client.channels.get('940720249454608414').send('Wordle has been reset for EST and scores can be submitted again!');
 
     const client = new Client({
         connectionString: process.env.DATABASE_URL,
@@ -113,7 +112,6 @@ function resetWordleDB() {
 
 var waitTimeMS = msTillWordleReset();
 setTimeout(resetWordleDB, waitTimeMS);
-return;
 
 client.on("messageCreate", function(message) {
     //Ignore bot messages
