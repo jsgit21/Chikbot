@@ -118,11 +118,11 @@ client.on("messageCreate", function(message) {
     //Ignore bot messages
     if (message.author.bot) return;
 
-    if (message.author.username == "dkirk/ David") {
-        message.channel.send(message.content);
-        message.delete();
-        return;
-    }
+    // if (message.author.username == "dkirk/ David") {
+    //     message.channel.send(message.content);
+    //     message.delete();
+    //     return;
+    // }
 
     const channelId = message.channel.id;
     const wordlechat = "940720249454608414";
