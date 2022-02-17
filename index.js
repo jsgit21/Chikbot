@@ -453,17 +453,15 @@ client.on("messageCreate", function(message) {
         //message.channel.send("Nice Qordle");
         var splitQuordle = message.content.split("\n");
         //console.log(splitQuordle)
-        if (splitQuordle.length != 23) {
-            console.log("QUORDLE ERROR: splitQuordle length is not 23, length: ",splitQuordle.length);
-            message.channel.send(`${tagUser} your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.`);
-            return;
-        }
         
         var arrayOffset = 4;
         var quordleData = [0, 0, 0, 0, 0, 0, 1, userID, username, 't']
 
         //For a quordle to be complete, the guessScore needs to be at least 4
         //and nums found needs to = 4
+
+        var firstguesses = -1;
+        var secondguesses = -1;
         var guessScore = 1;
         var numsfound = 0;
         var redSquaresFound = 0;
@@ -493,11 +491,33 @@ client.on("messageCreate", function(message) {
                     if (splitQuordle[i][j] > guessScore) {
                         guessScore = splitQuordle[i][j];
                     }
+                    if(splitQuordle[i][j] > firstguesses && i == 1) {
+                        firstguesses = splitQuordle[i][j]
+                    }
+                    else if (splitQuordle[i][j] > secondguesses && i == 2) {
+                        secondguesses = splitQuordle[i][j];
+                    }
                 }
             }
         }
         console.log("guessScore: ",guessScore);
         console.log("numsfound: ",numsfound);
+
+        if (firstguesses == -1){
+            firstguesses = 9;
+        }
+        if (secondguesses == -1){
+            secondguesses = 9;
+        }
+
+        var expectedLength = 5 + firstguesses + secondguesses;
+        
+        
+        if (splitQuordle.length != expectedLength) {
+            console.log(`QUORDLE ERROR: splitQuordle length is not ${expectedLength}, length: `,splitQuordle.length);
+            message.channel.send(`${tagUser} your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.`);
+            return;
+        }
 
         if (numsfound + redSquaresFound != 4) {
             console.log("QUORDLE ERROR: Nums + redsquares != 4");
