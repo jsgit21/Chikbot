@@ -86,7 +86,7 @@ function resetWordleDB() {
             }
             con.end();
         });
-        
+
         con.query(quordle, function (err, result) {
             if (err) throw err;
             for (let row of result.rows) {
@@ -371,9 +371,14 @@ client.on("messageCreate", function(message) {
         var username = message.author.username;
         var userID = message.author.id;
 
-        message.channel.send("Nice Qordle");
+        //message.channel.send("Nice Qordle");
         var splitQuordle = message.content.split("\n");
-        console.log(splitQuordle)
+        //console.log(splitQuordle)
+        if (splitQuordle.length != 23) {
+            console.log("QUORDLE ERROR: splitQuordle length is not 23, length: ",splitQuordle.length);
+            message.reply("Your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.");
+            return;
+        }
         
         var arrayOffset = 4;
         var quordleData = [0, 0, 0, 0, 0, 0, 1, userID, username, 't']
@@ -387,7 +392,8 @@ client.on("messageCreate", function(message) {
         for (i=1; i<=2; i++) {
             console.log(splitQuordle[i], " length: ", splitQuordle[i].length);
             if (splitQuordle[i].length < 4 || splitQuordle[i].length > 6) {
-                console.log("There was an error with your quordle submission");
+                console.log("QUORDLE ERROR: splitquordle[",i,"] is not within length 4 to 6, length: ",splitQuordle[i].length);
+                message.reply("Your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.");
                 return;
             }
 
@@ -415,7 +421,9 @@ client.on("messageCreate", function(message) {
         console.log("numsfound: ",numsfound);
 
         if (numsfound + redSquaresFound != 4) {
-            console.log("There was an error with your quordle submission")
+            console.log("QUORDLE ERROR: Nums + redsquares != 4");
+            message.reply("Your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.");
+            return;
         }
 
         if (numsfound == 4) {
@@ -449,7 +457,7 @@ client.on("messageCreate", function(message) {
             
             client.query(query, function (err, result) {
                 if (err) throw err;
-                console.log("RESULT: ", result);
+                //console.log("RESULT: ", result);
                 var playerstats = result['rows'][0];
                 console.log(playerstats);
 
