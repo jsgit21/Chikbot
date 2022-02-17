@@ -596,7 +596,7 @@ client.on("messageCreate", function(message) {
             console.log(cards[0].name) // "Squee, Goblin Nabob"
             var url = cards[0].imageUrl;
             const attachment = new MessageAttachment(url);
-            message.channel.send(attachment);
+            message.channel.send({attachments: [attachment]});
             console.log("Did you mean:\n");
             for (i = 1; i < 5; i++){
                 console.log(cards[i].name);
