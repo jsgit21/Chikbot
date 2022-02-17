@@ -119,7 +119,7 @@ const commandList = {
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
 const qregex = new RegExp("Daily Quordle #[0-9].*\n");
-const mtgregex = new RegExp("\[\[.*\]\]")
+const mtgregex = new RegExp("\\[\\[.*\\]\\]");
 const prefix = "$";
 
 client.on("messageCreate", function(message) {
