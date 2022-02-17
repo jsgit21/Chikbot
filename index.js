@@ -3,7 +3,7 @@ const Discord = require('discord.js'); //import discord.js
 const fetch = require('node-fetch'); //import node fetch
 const mtg = require('mtgsdk');
 const { Client } = require('pg');
-const { MessageAttachment } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
@@ -595,8 +595,9 @@ client.on("messageCreate", function(message) {
         .then(cards => {
             console.log(cards[0].name) // "Squee, Goblin Nabob"
             var url = cards[0].imageUrl;
-            const attachment = new MessageAttachment(url);
-            message.channel.send(`text`, { attachments: [attachment]});
+            const embed = new MessageEmbed()
+            embed.setImage(url);
+            message.channel.send({embeds: [embed]});
             console.log("Did you mean:\n");
             for (i = 1; i < 5; i++){
                 console.log(cards[i].name);
