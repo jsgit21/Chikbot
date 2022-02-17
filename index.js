@@ -155,8 +155,11 @@ client.on("messageCreate", function(message) {
         else if (commandBody === "keys") {
             message.channel.send("Imagine losing a hardcore getting ecumenical keys...")
         }
-        else if (commandBody === "emoji") {
-            message.channel.send("<a:Untitled:941779064191078400>")
+        else if (commandBody == "rules") {
+            message.channel.send("This database is being hosted for free on Heroku with limitations on the number of entries. This is for fun, please do not abuse the score system or you will be removed from it.")
+        }
+        else if (commandBody == "breakchikbot") {
+            message.channel.send("Attempting to kick player from friends chat...");
         }
 
         else if (commandBody === "dadjoke") {
@@ -265,12 +268,7 @@ client.on("messageCreate", function(message) {
                 });
             });
         }
-        else if (commandBody == "rules") {
-            message.channel.send("This database is being hosted for free on Heroku with limitations on the number of entries. This is for fun, please do not abuse the score system or you will be removed from it.")
-        }
-        else if (commandBody == "breakchikbot") {
-            message.channel.send("Attempting to kick player from friends chat...");
-        }
+        
     }
 
     // Check for wordle score submission
