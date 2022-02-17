@@ -597,7 +597,7 @@ client.on("messageCreate", function(message) {
             var url = cards[0].imageUrl;
             const embed = new MessageEmbed()
             embed.setImage(url);
-            message.channel.send(embed);
+            message.channel.send({embeds: [embed]});
             console.log("Did you mean:\n");
             for (i = 1; i < 5; i++){
                 console.log(cards[i].name);
