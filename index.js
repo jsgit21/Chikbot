@@ -458,10 +458,9 @@ client.on("messageCreate", function(message) {
         var quordleData = [0, 0, 0, 0, 0, 0, 1, userID, username, 't']
 
         //For a quordle to be complete, the guessScore needs to be at least 4
-        //and nums found needs to = 4
-
-        var firstguesses = -1;
-        var secondguesses = -1;
+        //nums found + red squares found need to = 4
+        var topquordleHeight = -1;
+        var bottomquordleHeight = -1;
         var guessScore = 1;
         var numsfound = 0;
         var redSquaresFound = 0;
@@ -491,28 +490,28 @@ client.on("messageCreate", function(message) {
                     if (splitQuordle[i][j] > guessScore) {
                         guessScore = splitQuordle[i][j];
                     }
-                    if(splitQuordle[i][j] > firstguesses && i == 1) {
-                        firstguesses = splitQuordle[i][j];
+                    if(splitQuordle[i][j] > topquordleHeight && i == 1) {
+                        topquordleHeight = splitQuordle[i][j];
                     }
-                    else if (splitQuordle[i][j] > secondguesses && i == 2) {
-                        secondguesses = splitQuordle[i][j];
+                    else if (splitQuordle[i][j] > bottomquordleHeight && i == 2) {
+                        bottomquordleHeight = splitQuordle[i][j];
                     }
                 }
             }
         }
         console.log("guessScore: ",guessScore);
         console.log("numsfound: ",numsfound);
-        console.log("firstguesses: ", firstguesses);
-        console.log("secondguesses: ", secondguesses);
+        console.log("topquordleHeight: ", topquordleHeight);
+        console.log("bottomquordleHeight: ", bottomquordleHeight);
 
-        if (firstguesses == -1){
-            firstguesses = 9;
+        if (topquordleHeight == -1){
+            topquordleHeight = 9;
         }
-        if (secondguesses == -1){
-            secondguesses = 9;
+        if (bottomquordleHeight == -1){
+            bottomquordleHeight = 9;
         }
 
-        var expectedLength = parseFloat(firstguesses) + parseFloat(secondguesses) + 5;
+        var expectedLength = parseFloat(topquordleHeight) + parseFloat(bottomquordleHeight) + 5;
         
         
         if (splitQuordle.length != expectedLength) {
