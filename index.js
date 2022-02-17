@@ -366,7 +366,7 @@ client.on("messageCreate", function(message) {
         console.log(splitQuordle)
         
         var arrayOffset = 4;
-        var quordleData = [0, 0, 0, 0, 0, 0, 1, username, userID, 't']
+        var quordleData = [0, 0, 0, 0, 0, 0, 1, userID, username, 't']
 
         //For a quordle to be complete, the guessScore needs to be at least 4
         //and nums found needs to = 4
