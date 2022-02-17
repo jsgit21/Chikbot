@@ -450,7 +450,7 @@ client.on("messageCreate", function(message) {
                     }
                 }
 
-                query = `INSERT INTO quordle (four, five, six, seven, eight, nine, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET one=quordle.one+${quordleData[0]}, two=quordle.two+${quordleData[1]}, three=quordle.three+${quordleData[2]}, four=quordle.four+${quordleData[3]}, five=quordle.five+${quordleData[4]}, six=quordle.six+${quordleData[5]}, total=quordle.total+1, playedtoday='t'`;
+                query = `INSERT INTO quordle (four, five, six, seven, eight, nine, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET four=quordle.four+${quordleData[0]}, five=quordle.five+${quordleData[1]}, six=quordle.six+${quordleData[2]}, seven=quordle.seven+${quordleData[3]}, eight=quordle.eight+${quordleData[4]}, nine=quordle.nine+${quordleData[5]}, total=quordle.total+1, playedtoday='t'`;
             
                 client.query(query, quordleData, function (err, result) {
                     if (err) throw err;
