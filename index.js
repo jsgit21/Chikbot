@@ -492,7 +492,7 @@ client.on("messageCreate", function(message) {
                         guessScore = splitQuordle[i][j];
                     }
                     if(splitQuordle[i][j] > firstguesses && i == 1) {
-                        firstguesses = splitQuordle[i][j]
+                        firstguesses = splitQuordle[i][j];
                     }
                     else if (splitQuordle[i][j] > secondguesses && i == 2) {
                         secondguesses = splitQuordle[i][j];
@@ -502,6 +502,8 @@ client.on("messageCreate", function(message) {
         }
         console.log("guessScore: ",guessScore);
         console.log("numsfound: ",numsfound);
+        console.log("firstguesses: ", firstguesses);
+        console.log("secondguesses: ", secondguesses);
 
         if (firstguesses == -1){
             firstguesses = 9;
