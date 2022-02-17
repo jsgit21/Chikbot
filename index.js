@@ -439,6 +439,7 @@ client.on("messageCreate", function(message) {
             
             client.query(query, function (err, result) {
                 if (err) throw err;
+                console.log("RESULT: ", result);
                 var playerstats = result['rows'][0];
                 console.log(playerstats);
 
