@@ -370,13 +370,14 @@ client.on("messageCreate", function(message) {
     else if ( message.content.match(qregex)) {
         var username = message.author.username;
         var userID = message.author.id;
+        var tagUser = message.author.toString();
 
         //message.channel.send("Nice Qordle");
         var splitQuordle = message.content.split("\n");
         //console.log(splitQuordle)
         if (splitQuordle.length != 23) {
             console.log("QUORDLE ERROR: splitQuordle length is not 23, length: ",splitQuordle.length);
-            message.reply("Your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.");
+            message.send(`${tagUser} your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.`);
             return;
         }
         
@@ -393,7 +394,7 @@ client.on("messageCreate", function(message) {
             console.log(splitQuordle[i], " length: ", splitQuordle[i].length);
             if (splitQuordle[i].length < 4 || splitQuordle[i].length > 6) {
                 console.log("QUORDLE ERROR: splitquordle[",i,"] is not within length 4 to 6, length: ",splitQuordle[i].length);
-                message.reply("Your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.");
+                message.send(`${tagUser} your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.`);
                 return;
             }
 
@@ -422,7 +423,7 @@ client.on("messageCreate", function(message) {
 
         if (numsfound + redSquaresFound != 4) {
             console.log("QUORDLE ERROR: Nums + redsquares != 4");
-            message.reply("Your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.");
+            message.send(`${tagUser} your score was not properly submitted. Please paste your Quordle score without any extra content added to the message.`);
             return;
         }
 
