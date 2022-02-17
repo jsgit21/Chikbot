@@ -45,21 +45,6 @@ function getFullUsername(givenFlags) {
     return commandFlag;
 }
 
-const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
-
-const prefix = "$";
-const commandList = {
-    "$help":"Information about Chikbot",
-    "$hi":"Say hello to Chikbot",
-    "$ping":"Pongs back with latency between messages",
-    "$chiken":"Bwakk bwakk!",
-    "$keys":"Who got the key?",
-    "$dadjoke":"Get a random dad joke!",
-    "$wordlestats":"Check for your wordlestats tracked in discord",
-    "$wordlestats <name>":"Check another user's wordlestats tracked in discord",
-    "$breakchikbot":"That's rude."
-}
-
 function msTillWordleReset() {
     var wordleReset = new Date();
     wordleReset.setHours(5,0,0,0);
@@ -108,6 +93,21 @@ function resetWordleDB() {
 
 var waitTimeMS = msTillWordleReset();
 setTimeout(resetWordleDB, waitTimeMS);
+
+const commandList = {
+    "$help":"Information about Chikbot",
+    "$hi":"Say hello to Chikbot",
+    "$ping":"Pongs back with latency between messages",
+    "$chiken":"Bwakk bwakk!",
+    "$keys":"Who got the key?",
+    "$dadjoke":"Get a random dad joke!",
+    "$wordlestats":"Check for your wordlestats tracked in discord",
+    "$wordlestats <name>":"Check another user's wordlestats tracked in discord",
+    "$breakchikbot":"That's rude."
+}
+const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
+const qregex = new RegExp("Daily Quordle #[0-9].*\n");
+const prefix = "$";
 
 client.on("messageCreate", function(message) {
     //Ignore bot messages
@@ -356,6 +356,114 @@ client.on("messageCreate", function(message) {
             });
         });
           
+    }
+    else if ( message.content.match(qregex)) {
+        var username = message.author.username;
+        var userID = message.author.id;
+
+        message.channel.send("Nice Qordle");
+        var splitQuordle = message.content.split("\n");
+        console.log(splitQuordle)
+        
+        var arrayOffset = 4;
+        var quordleData = [0, 0, 0, 0, 0, 0, 1, username, userID, 't']
+
+        //For a quordle to be complete, the guessScore needs to be at least 4
+        //and nums found needs to = 4
+        var guessScore = 1;
+        var numsfound = 0;
+        var redSquaresFound = 0;
+        var solved;
+        for (i=1; i<=2; i++) {
+            console.log(splitQuordle[i], " length: ", splitQuordle[i].length);
+            if (splitQuordle[i].length < 4 || splitQuordle[i].length > 6) {
+                console.log("There was an error with your quordle submission");
+                return;
+            }
+
+            //Find the number of red squares in the pattern
+            var array = splitQuordle[i].split('');
+            console.log("array: ", array);
+            for(x = 0; x < array.length-1; x++) {
+                //console.log("array[x] = ",array[x], " array[x+1] = ",array[x+1]);
+                if (array[x] == '\ud83d' && array[x+1] == '\udfe5') {
+                    redSquaresFound++;
+                }
+            }
+            for(j=0; j<splitQuordle[i].length; j++) {
+                //Check if its a number
+                //console.log(splitQuordle[i][j])
+                if (splitQuordle[i][j] >= '0' && splitQuordle[i][j] <= '9') {
+                    numsfound++;
+                    if (splitQuordle[i][j] > guessScore) {
+                        guessScore = splitQuordle[i][j];
+                    }
+                }
+            }
+        }
+        console.log("guessScore: ",guessScore);
+        console.log("numsfound: ",numsfound);
+
+        if (numsfound + redSquaresFound != 4) {
+            console.log("There was an error with your quordle submission")
+        }
+
+        if (numsfound == 4) {
+            solved = true;
+        }
+        else {
+            solved = false;
+        }
+
+        if (solved) {
+            quordleData[guessScore-arrayOffset]=1;
+        }
+
+        console.log(quordleData)
+        console.log("Red Squares Found: ", redSquaresFound);
+
+        //Uses default .ENV parameters specified in .ENV file
+        //https://node-postgres.com/features/connecting
+        const client = new Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                rejectUnauthorized: false
+            }
+        });
+
+        client.connect(function(err) {
+            if (err) throw err;
+            console.log("Connected!");
+
+            var query = `SELECT * FROM quordle WHERE userid='${userID}'`;
+            
+            client.query(query, function (err, result) {
+                if (err) throw err;
+                var playerstats = result['rows'][0];
+                console.log(playerstats);
+
+                if (result['rows'].length != 0) {
+                    if (playerstats.playedtoday) {
+                        message.reply(`Sorry ${username} - It looks like you've already submitted a Quordle score today.`);
+                        client.end();
+                        return;
+                    }
+                }
+
+                query = `INSERT INTO quordle (four, five, six, seven, eight, nine, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET one=quordle.one+${quordleData[0]}, two=quordle.two+${quordleData[1]}, three=quordle.three+${quordleData[2]}, four=quordle.four+${quordleData[3]}, five=quordle.five+${quordleData[4]}, six=quordle.six+${quordleData[5]}, total=quordle.total+1, playedtoday='t'`;
+            
+                client.query(query, quordleData, function (err, result) {
+                    if (err) throw err;
+                    for (let row of result.rows) {
+                        console.log(JSON.stringify(row));
+                    }
+                    message.reply(`Thanks ${username} - Your score has been recorded. You can use **$quordlestats** to see your score distribution. See **$rules** for more details.`);
+                    //console.log(result);
+                    client.end();
+                });
+
+            });
+        });
     }
 });
 
