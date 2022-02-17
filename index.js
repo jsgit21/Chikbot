@@ -1,7 +1,9 @@
 require('dotenv').config(); //initialize dotenv
 const Discord = require('discord.js'); //import discord.js
 const fetch = require('node-fetch'); //import node fetch
+const mtg = require('mtgsdk');
 const { Client } = require('pg');
+const { card } = require('mtgsdk');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
@@ -117,6 +119,7 @@ const commandList = {
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
 const qregex = new RegExp("Daily Quordle #[0-9].*\n");
+const mtgregex = new RegExp("\[\[.*\]\]")
 const prefix = "$";
 
 client.on("messageCreate", function(message) {
@@ -583,6 +586,21 @@ client.on("messageCreate", function(message) {
 
             });
         });
+    }
+    else if (message.content.match(mtgregex)) {
+        //remove [[ ]]
+        var cardname = message.content.substring(2, message.content.length-2);
+
+        mtg.card.where({ name: cardname })
+        .then(cards => {
+            console.log(cards[0].name) // "Squee, Goblin Nabob"
+            console.log(cards[0])
+            console.log("Did you mean:\n");
+            for (i = 1; i < 5; i++){
+                console.log(cards[i].name);
+            }
+        })
+
     }
 });
 
