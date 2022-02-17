@@ -3,7 +3,8 @@ const Discord = require('discord.js'); //import discord.js
 const fetch = require('node-fetch'); //import node fetch
 const mtg = require('mtgsdk');
 const { Client } = require('pg');
-const { card } = require('mtgsdk');
+const { mtg } = require('mtgsdk');
+const { MessageEmbed } = require('discord.js');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
