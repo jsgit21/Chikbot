@@ -120,6 +120,7 @@ const qregex = new RegExp("Daily Quordle #[0-9].*\n");
 const prefix = "$";
 
 client.on("messageCreate", function(message) {
+
     //Ignore bot messages
     if (message.author.bot) return;
 
@@ -127,6 +128,10 @@ client.on("messageCreate", function(message) {
     const wordlechat = "940720249454608414";
     if (channelId !== "941770101672267808" && channelId !== 
     "941756769154252820" && channelId !== wordlechat) return;
+
+    var username = message.author.username;
+    var userID = message.author.id;
+    var tagUser = message.author.toString();
 
     if (message.content.startsWith(prefix)) {
         var splitFlags = message.content.split(" ");
@@ -266,8 +271,6 @@ client.on("messageCreate", function(message) {
 
     // Check for wordle score submission
     else if (message.content.match(wordleRegex)){
-        var userID = message.author.id;
-        var username = message.author.username;
 
         wordleHeader = message.content.split(' ');
         wordleScore = wordleHeader[2].split('\n')[0];
@@ -310,7 +313,7 @@ client.on("messageCreate", function(message) {
 
         if (numBlockRows != rawScore) {
             console.log("The length of the message was not as expected for this score");
-            message.reply("Your score was not properly submitted. Please paste your Wordle score without any extra content added to the message.")
+            message.channel.send(`${tagUser} your score was not properly submitted. Please paste your Wordle score without any extra content added to the message.`);
 
             return;
         }
@@ -345,7 +348,7 @@ client.on("messageCreate", function(message) {
 
                 if (result['rows'].length != 0) {
                     if (playerstats.playedtoday) {
-                        message.reply(`Sorry ${username} - It looks like you've already submitted a Wordle score today.`);
+                        message.channel.send(`Sorry ${tagUser} - It looks like you've already submitted a Wordle score today.`);
                         client.end();
                         return;
                     }
@@ -358,7 +361,7 @@ client.on("messageCreate", function(message) {
                     for (let row of result.rows) {
                         console.log(JSON.stringify(row));
                     }
-                    message.reply(`Thanks ${username} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
+                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
                     //console.log(result);
                     client.end();
                 });
@@ -368,9 +371,6 @@ client.on("messageCreate", function(message) {
           
     }
     else if ( message.content.match(qregex)) {
-        var username = message.author.username;
-        var userID = message.author.id;
-        var tagUser = message.author.toString();
 
         //message.channel.send("Nice Qordle");
         var splitQuordle = message.content.split("\n");
@@ -464,7 +464,7 @@ client.on("messageCreate", function(message) {
 
                 if (result['rows'].length != 0) {
                     if (playerstats.playedtoday) {
-                        message.reply(`Sorry ${username} - It looks like you've already submitted a Quordle score today.`);
+                        message.channel.send(`Sorry ${tagUser} - It looks like you've already submitted a Quordle score today.`);
                         client.end();
                         return;
                     }
@@ -477,7 +477,7 @@ client.on("messageCreate", function(message) {
                     for (let row of result.rows) {
                         console.log(JSON.stringify(row));
                     }
-                    message.reply(`Thanks ${username} - Your score has been recorded. You can use **$quordlestats** to see your score distribution. See **$rules** for more details.`);
+                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$quordlestats** to see your score distribution. See **$rules** for more details.`);
                     //console.log(result);
                     client.end();
                 });
