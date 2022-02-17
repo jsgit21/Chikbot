@@ -60,9 +60,6 @@ const commandList = {
     "$breakchikbot":"That's rude."
 }
 
-const laz = ["We don't take kindly to llamas round these parts...","Hey! What did I say llama boy", "No seriously, stop it", "You're starting to really get on my nerves", "Excuse me, what do you think this is?","Sir, this is a llama free zone", "Ok really im gonna need you to stop.", "Stop.", "Stop...", "STOP IT", "LLAMA!!!!!!", "I'm going to Alt+F4 myself", "This is bullshit.", "@Chiken dude can you fucking stop this guy?", "alright, fuck this!"];
-let count = 0;
-
 function msTillWordleReset() {
     var wordleReset = new Date();
     wordleReset.setHours(5,0,0,0);
@@ -116,12 +113,6 @@ client.on("messageCreate", function(message) {
     //Ignore bot messages
     if (message.author.bot) return;
 
-    // if (message.author.username == "dkirk/ David") {
-    //     message.channel.send(message.content);
-    //     message.delete();
-    //     return;
-    // }
-
     const channelId = message.channel.id;
     const wordlechat = "940720249454608414";
     if (channelId !== "941770101672267808" && channelId !== 
@@ -163,14 +154,6 @@ client.on("messageCreate", function(message) {
         }
 
         else if (commandBody === "dadjoke") {
-            // if (message.author.username.toLowerCase() == "lazlodallama") {
-            //     if (count <= 14) {
-            //         message.channel.send(laz[count]);
-            //     }
-            //     count = count + 1;
-            //     return
-            // }
-            //https://icanhazdadjoke.com/api
             const url = "https://icanhazdadjoke.com/";
 
             const options = {
