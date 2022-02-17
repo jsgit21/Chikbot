@@ -512,7 +512,7 @@ client.on("messageCreate", function(message) {
             secondguesses = 9;
         }
 
-        var expectedLength = (firstguesses + secondguesses) + 5;
+        var expectedLength = parseFloat(firstguesses) + parseFloat(secondguesses) + 5;
         
         
         if (splitQuordle.length != expectedLength) {
