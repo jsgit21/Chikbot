@@ -452,7 +452,7 @@ client.on("messageCreate", function(message) {
 
         //message.channel.send("Nice Qordle");
         var splitQuordle = message.content.split("\n");
-        console.log(splitQuordle)
+        //console.log(splitQuordle)
         
         var arrayOffset = 4;
         var quordleData = [0, 0, 0, 0, 0, 0, 1, userID, username, 't']
