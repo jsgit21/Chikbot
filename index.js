@@ -86,7 +86,6 @@ function resetWordleDB() {
             for (let row of result.rows) {
                 console.log(JSON.stringify(row));
             }
-            con.end();
         });
 
         con.query(quordle, function (err, result) {
