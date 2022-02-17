@@ -63,8 +63,8 @@ function msTillWordleReset() {
 }
 
 function resetWordleDB() {
-    console.log("Resetting wordle DB, time to reset!");
-    client.channels.cache.get('940720249454608414').send('Wordle has been reset (EST) and scores may be submitted again, hooray!');
+    console.log("Resetting wordle/quordle DB, time to reset!");
+    client.channels.cache.get('940720249454608414').send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
 
     const con = new Client({
         connectionString: process.env.DATABASE_URL,
@@ -76,8 +76,18 @@ function resetWordleDB() {
     con.connect(function(err) {
         if (err) throw err;
         console.log("Connected!");
-        var sql = `UPDATE wordle SET playedtoday = 'f'`;
-        con.query(sql, function (err, result) {
+        var wordle = `UPDATE wordle SET playedtoday = 'f'`;
+        var quordle = `UPDATE quordle SET playedtoday = 'f'`;
+
+        con.query(wordle, function (err, result) {
+            if (err) throw err;
+            for (let row of result.rows) {
+                console.log(JSON.stringify(row));
+            }
+            con.end();
+        });
+        
+        con.query(quordle, function (err, result) {
             if (err) throw err;
             for (let row of result.rows) {
                 console.log(JSON.stringify(row));
