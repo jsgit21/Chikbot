@@ -266,6 +266,84 @@ client.on("messageCreate", function(message) {
                 });
             });
         }
+        else if (commandBody == "quordlestats") {
+            var badActors = [];
+
+            //Get full username if search user flags are passed
+            const commandFlag = getFullUsername(splitFlags);
+            //console.log("CommandFlag: ", commandFlag);
+            if(commandFlag != '') {
+                if(commandFlag.length > 32) {
+                    message.channel.send("Sorry, this name is too long to be a discord name.");
+                    return;
+                }
+                else if(!validName(commandFlag)) {
+                    message.channel.send("Sorry, this is invalid use of this command, please see $commands.");
+                    return;
+                }
+            }
+
+            //Uses default .ENV parameters specified in .ENV file
+            //https://node-postgres.com/features/connecting
+            const client = new Client({
+                connectionString: process.env.DATABASE_URL,
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            });
+    
+            client.connect(function(err) {
+                if (err) throw err;
+                console.log("Connected!");
+
+                if (commandFlag == '') {
+                    var sql = `SELECT * FROM quordle WHERE userid='${userID}'`;
+                }
+                else {
+                    var sql = `SELECT * FROM quordle WHERE name='${commandFlag}'`;
+                }
+                client.query(sql, function (err, result) {
+                    if (err) throw err;
+                    for (let row of result.rows) {
+                        console.log(JSON.stringify(row));
+                    }
+                    //console.log(result['rows'][0]);
+
+                    if (result['rows'].length != 0) {
+                        var userinfo = result['rows'][0];
+
+                        var biggest = 1;
+                        var gameswon = 0;
+                        var nums = [userinfo.four, userinfo.five, userinfo.six, userinfo.seven, userinfo.eight, userinfo.nine];
+                        for (i = 0; i < 6; i++) {
+                            gameswon = gameswon + nums[i];
+                            if (nums[i] > biggest) {
+                                biggest = nums[i];
+                            }
+                        }
+                        var displaybar = []
+                        for (i = 0; i < 6; i++) {
+                            numofx = (nums[i]/biggest)*16;
+                            displaybar[i] = '>'.repeat(numofx);
+                            displaybar[i] = displaybar[i] + " ";
+                        }
+                        var gameslost = userinfo.total - gameswon;
+
+                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`py\n@ ${userinfo.name}\n\`\`\`\`\`\`prolog\n4/9 ->${displaybar[0]}${userinfo.four}\n5/9 ->${displaybar[1]}${userinfo.five}\n6/6 ->${displaybar[2]}${userinfo.six}\n7/9 ->${displaybar[3]}${userinfo.seven}\n8/9 ->${displaybar[4]}${userinfo.eight}\n9/9 ->${displaybar[5]}${userinfo.nine}\n\`\`\`\`\`\`prolog\nGames Lost = ${gameslost}\nTotal Played = ${userinfo.total}\n\`\`\``)
+                    }
+                    else {
+                        if (commandFlag == '') {
+                            message.reply(`You were not found in the Quordle database.\nBegin playing Quordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
+                        }
+                        else {
+                            message.reply(`The user **${commandFlag}** was not found in the Quordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Quordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
+                        }
+                    }
+
+                    client.end();
+                });
+            });
+        }
         
     }
 
