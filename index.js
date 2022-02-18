@@ -9,7 +9,7 @@ const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //cr
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-  });
+});
 
 function commandsToString(commands) {
     let printout = "";
@@ -112,8 +112,10 @@ const commandList = {
     "$chiken":"Bwakk bwakk!",
     "$keys":"Who got the key?",
     "$dadjoke":"Get a random dad joke!",
-    "$wordlestats":"Check for your wordlestats tracked in discord",
-    "$wordlestats <name>":"Check another user's wordlestats tracked in discord",
+    "$wstats":"Check for your wordle stats tracked in discord",
+    "$wstats <name>":"Check another user's wordle stats tracked in discord",
+    "qstats":"Check for your quordle stats tracked in discord",
+    "qstats <name>":"Check another user's quordle stats tracked in discord",
     "$breakchikbot":"That's rude."
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
@@ -189,7 +191,7 @@ client.on("messageCreate", function(message) {
 
             
         }
-        else if (commandBody == "wordlestats") {
+        else if (commandBody == "wstats") {
             var badActors = [];
             var userID = message.author.id;
 
@@ -268,7 +270,7 @@ client.on("messageCreate", function(message) {
                 });
             });
         }
-        else if (commandBody == "quordlestats") {
+        else if (commandBody == "qstats") {
             var badActors = [];
 
             //Get full username if search user flags are passed
@@ -441,7 +443,7 @@ client.on("messageCreate", function(message) {
                     for (let row of result.rows) {
                         console.log(JSON.stringify(row));
                     }
-                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
+                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wstats** to see your score distribution. See **$rules** for more details.`);
                     //console.log(result);
                     client.end();
                 });
@@ -578,7 +580,7 @@ client.on("messageCreate", function(message) {
                     for (let row of result.rows) {
                         console.log(JSON.stringify(row));
                     }
-                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$quordlestats** to see your score distribution. See **$rules** for more details.`);
+                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$qstats** to see your score distribution. See **$rules** for more details.`);
                     //console.log(result);
                     client.end();
                 });
