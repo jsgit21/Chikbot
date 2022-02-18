@@ -66,7 +66,8 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle/quordle DB, time to reset!");
-    client.channels.cache.get('940720249454608414').send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
+    var wordleChannelID = '940720249454608414';
+    client.channels.cache.get(wordleChannelID).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
 
     const con = new Client({
         connectionString: process.env.DATABASE_URL,
@@ -112,11 +113,11 @@ const commandList = {
     "$chiken":"Bwakk bwakk!",
     "$keys":"Who got the key?",
     "$dadjoke":"Get a random dad joke!",
+    "$breakchikbot":"That's rude.",
     "$wstats":"Check for your wordle stats tracked in discord",
     "$wstats <name>":"Check another user's wordle stats tracked in discord",
     "$qstats":"Check for your quordle stats tracked in discord",
     "$qstats <name>":"Check another user's quordle stats tracked in discord",
-    "$breakchikbot":"That's rude."
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
 const qregex = new RegExp("Daily Quordle #[0-9].*\n");
