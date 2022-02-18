@@ -114,8 +114,8 @@ const commandList = {
     "$dadjoke":"Get a random dad joke!",
     "$wstats":"Check for your wordle stats tracked in discord",
     "$wstats <name>":"Check another user's wordle stats tracked in discord",
-    "qstats":"Check for your quordle stats tracked in discord",
-    "qstats <name>":"Check another user's quordle stats tracked in discord",
+    "$qstats":"Check for your quordle stats tracked in discord",
+    "$qstats <name>":"Check another user's quordle stats tracked in discord",
     "$breakchikbot":"That's rude."
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
