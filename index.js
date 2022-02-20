@@ -592,36 +592,130 @@ client.on("messageCreate", function(message) {
             });
         });
     }
-    // else if (message.content.match(mtgregex)) {
-    //     //remove [[ ]]
-    //     var cardname = message.content.substring(2, message.content.length-2);
+    else if (message.content.match(mtgregex)) {
 
-    //     mtg.card.where({ name: cardname })
-    //     .then(cards => {
-    //         if(typeof cards[0] != 'undefined') {
-    //             console.log(cards[0].name) // "Squee, Goblin Nabob"
+        async function getCardWithImage(cardname) {
+            let promise = new Promise((resolve,reject) => {
+                mtg.card.where({ name: cardname })
+                .then(matched_cards => {
+                    var found = false;
+                    for(i = 0; i < matched_cards.length; i++) {
+                        if (typeof matched_cards[i].imageUrl != 'undefined') {
+                            matchCard = matched_cards[i];
+                            url = matched_cards[i].imageUrl;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) {
+                        console.log("Card was image was found!");
+                        resolve(matchCard);
+                    }
+                    else {
+                        console.log("Card image was not found!")
+                        reject("NO CARD WITH IMG FOUND");
+                    }
+                })
+            })
+            let imgcard = await promise;
+            return imgcard;
+        }
 
-    //             var url = cards[0].imageUrl;
-    //             const embed = new MessageEmbed()
-    //             embed.setImage(url);
-    //             message.channel.send({embeds: [embed]});
+        //remove [[ ]]
+        var cardname = message.content.substring(2, message.content.length-2);
+    
+        mtg.card.where({ name: cardname })
+        .then(async cards => {
+            if (typeof cards[0] != 'undefined') {
+                try {
+                    console.log("matches found: ",cards.length)
+                    var matchCard = cards[0];
+                    var cardFound = matchCard.name;
+                    console.log("cardFound: ",cards[0].name) // "Squee, Goblin Nabob"
+                    var url = matchCard.imageUrl;
+    
+                    //If image not found on original card, look for it's image
+                    if (typeof matchCard.imageUrl == 'undefined') {
+                        await getCardWithImage(cardFound)
+                        .then(cardWithImage => {
+                            url = cardWithImage.imageUrl;
+                        })
+                        .catch(result =>{
+                            //send error no card with img was found
+                            console.log(result);
+                        })
+                    }
+    
+                    console.log("testurl: ", url)
+    
+                    const embed = new MessageEmbed()
+                    embed.setImage(url);
+                    message.channel.send({embeds: [embed]});
+    
+                    // If the card searched is not an exact match, find alternatives
+                    if (cardname.toLowerCase() != cardFound.toLowerCase()) {
+                        let suggested = 5;
+                        let mySet = new Set();
+                        if (cards.length < 5) {
+                            suggested = cards.length;
+                        }
+    
+                        console.log("Did you mean: ");
+                        var outputString = "Did you mean: \n";
+                        for (i = 1; i < suggested; i++){
+                            mySet.add(cards[i].name);
+                        }
+                        const setIterator = mySet.values();
+                        for (i=0; i < mySet.size; i++) {
+                            outputString = outputString + "> "+setIterator.next().value+"\n";
+                        }
+                        console.log(outputString);
+                        message.channel.send(outputString);
+                    }
+    
+                    
+                }
+                catch(err) {
+                console.log(err);
+                }
+            }
+            else {
+                console.log("No card was found!")
+                message.channel.send("No card was found!")
+            }
+            
+        })
+    }
+    else if (message.content.match(mtgregex)) {
+        //remove [[ ]]
+        var cardname = message.content.substring(2, message.content.length-2);
 
-    //             var suggested = 5;
-    //             if (cards.length < 5) {
-    //                 suggested = cards.length;
-    //             }
+        mtg.card.where({ name: cardname })
+        .then(cards => {
+            if(typeof cards[0] != 'undefined') {
+                console.log(cards[0].name) // "Squee, Goblin Nabob"
 
-    //             console.log("Did you mean:\n");
-    //             for (i = 1; i < suggested; i++){
-    //                 console.log(cards[i].name);
-    //             }
-    //         }
-    //         else {
-    //             message.channel.send("I'm sorry, there was no match for that card.")
-    //         }
-    //     })
+                var url = cards[0].imageUrl;
+                const embed = new MessageEmbed()
+                embed.setImage(url);
+                message.channel.send({embeds: [embed]});
 
-    // }
+                var suggested = 5;
+                if (cards.length < 5) {
+                    suggested = cards.length;
+                }
+
+                console.log("Did you mean:\n");
+                for (i = 1; i < suggested; i++){
+                    console.log(cards[i].name);
+                }
+            }
+            else {
+                message.channel.send("I'm sorry, there was no match for that card.")
+            }
+        })
+
+    }
 });
 
 //make sure this line is the last line
