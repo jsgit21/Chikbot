@@ -592,43 +592,36 @@ client.on("messageCreate", function(message) {
             });
         });
     }
-    else if (message.content.match(mtgregex)) {
-        //remove [[ ]]
-        var cardname = message.content.substring(2, message.content.length-2);
+    // else if (message.content.match(mtgregex)) {
+    //     //remove [[ ]]
+    //     var cardname = message.content.substring(2, message.content.length-2);
 
-        mtg.card.where({ name: cardname })
-        .then(cards => {
-            if(typeof cards[0] != 'undefined') {
-                console.log(cards[0].name) // "Squee, Goblin Nabob"
+    //     mtg.card.where({ name: cardname })
+    //     .then(cards => {
+    //         if(typeof cards[0] != 'undefined') {
+    //             console.log(cards[0].name) // "Squee, Goblin Nabob"
 
-                var url = cards[0].imageUrl;
-                const embed = new MessageEmbed()
-                embed.setImage(url);
-                message.channel.send({embeds: [embed]});
+    //             var url = cards[0].imageUrl;
+    //             const embed = new MessageEmbed()
+    //             embed.setImage(url);
+    //             message.channel.send({embeds: [embed]});
 
-                var suggested = 5;
-                if (cards.length < 5) {
-                    suggested = cards.length;
-                }
+    //             var suggested = 5;
+    //             if (cards.length < 5) {
+    //                 suggested = cards.length;
+    //             }
 
-                console.log("Did you mean:\n");
-                for (i = 1; i < suggested; i++){
-                    console.log(cards[i].name);
-                }
-            }
-            else {
-                message.channel.send("I'm sorry, there was no match for that card.")
-            }
-        })
-        .catch(function (error) {
-            if (error.response) {
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            }
-          });
+    //             console.log("Did you mean:\n");
+    //             for (i = 1; i < suggested; i++){
+    //                 console.log(cards[i].name);
+    //             }
+    //         }
+    //         else {
+    //             message.channel.send("I'm sorry, there was no match for that card.")
+    //         }
+    //     })
 
-    }
+    // }
 });
 
 //make sure this line is the last line
