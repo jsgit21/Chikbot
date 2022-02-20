@@ -621,20 +621,18 @@ client.on("messageCreate", function(message) {
             return imgcard;
         }
 
-        //remove [[ ]]
+        //remove [[ ]] - Adjusted for pulling [[<name>]] anywhere within a message.
         var msg = message.content.match(mtgregex)[0];
-        console.log("msg: ",msg);
         var cardname = msg.substring(2, msg.length-2);
-        console.log("cardname: ",cardname);
     
         mtg.card.where({ name: cardname })
         .then(async cards => {
             if (typeof cards[0] != 'undefined') {
                 try {
-                    console.log("matches found: ",cards.length)
+                    //console.log("matches found: ",cards.length)
                     var matchCard = cards[0];
                     var cardFound = matchCard.name;
-                    console.log("cardFound: ",cards[0].name) // "Squee, Goblin Nabob"
+                    //console.log("cardFound: ",cards[0].name) // "Squee, Goblin Nabob"
                     var url = matchCard.imageUrl;
     
                     //If image not found on original card, look for it's image
@@ -646,10 +644,11 @@ client.on("messageCreate", function(message) {
                         .catch(result =>{
                             //send error no card with img was found
                             console.log(result);
+                            message.channel.send(`${result} - It's probably broken Joe - see if this crashed the bot - should exit execution`)
                         })
                     }
     
-                    console.log("testurl: ", url)
+                    //console.log("url: ", url)
     
                     const embed = new MessageEmbed()
                     embed.setImage(url);
@@ -674,7 +673,7 @@ client.on("messageCreate", function(message) {
                         for (i=0; i < mySet.size; i++) {
                             outputString = outputString + "> "+setIterator.next().value+"\n";
                         }
-                        console.log(outputString);
+                        //console.log(outputString);
                         if(mySet.size > 0) {
                             message.channel.send(outputString);
                         }
@@ -683,11 +682,11 @@ client.on("messageCreate", function(message) {
                     
                 }
                 catch(err) {
-                console.log(err);
+                    console.log(err);
                 }
             }
             else {
-                console.log("No card was found!")
+                //console.log("No card was found!")
                 message.channel.send("No card was found!")
             }
             
