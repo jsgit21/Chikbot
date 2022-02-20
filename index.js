@@ -9,7 +9,7 @@ const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //cr
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-  });
+});
 
 function commandsToString(commands) {
     let printout = "";
@@ -66,7 +66,8 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle/quordle DB, time to reset!");
-    client.channels.cache.get('940720249454608414').send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
+    var wordleChannelID = '940720249454608414';
+    client.channels.cache.get(wordleChannelID).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
 
     const con = new Client({
         connectionString: process.env.DATABASE_URL,
@@ -112,9 +113,11 @@ const commandList = {
     "$chiken":"Bwakk bwakk!",
     "$keys":"Who got the key?",
     "$dadjoke":"Get a random dad joke!",
-    "$wordlestats":"Check for your wordlestats tracked in discord",
-    "$wordlestats <name>":"Check another user's wordlestats tracked in discord",
-    "$breakchikbot":"That's rude."
+    "$breakchikbot":"That's rude.",
+    "$wstats":"Check for your wordle stats tracked in discord",
+    "$wstats <name>":"Check another user's wordle stats tracked in discord",
+    "$qstats":"Check for your quordle stats tracked in discord",
+    "$qstats <name>":"Check another user's quordle stats tracked in discord",
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
 const qregex = new RegExp("Daily Quordle #[0-9].*\n");
@@ -163,9 +166,6 @@ client.on("messageCreate", function(message) {
         else if (commandBody === "keys") {
             message.channel.send("Imagine losing a hardcore getting ecumenical keys...")
         }
-        else if (commandBody == "rules") {
-            message.channel.send("This database is being hosted for free on Heroku with limitations on the number of entries. This is for fun, please do not abuse the score system or you will be removed from it.")
-        }
         else if (commandBody == "breakchikbot") {
             message.channel.send("Attempting to kick player from friends chat...");
         }
@@ -189,7 +189,7 @@ client.on("messageCreate", function(message) {
 
             
         }
-        else if (commandBody == "wordlestats") {
+        else if (commandBody == "wstats") {
             var badActors = [];
             var userID = message.author.id;
 
@@ -268,7 +268,7 @@ client.on("messageCreate", function(message) {
                 });
             });
         }
-        else if (commandBody == "quordlestats") {
+        else if (commandBody == "qstats") {
             var badActors = [];
 
             //Get full username if search user flags are passed
@@ -441,7 +441,7 @@ client.on("messageCreate", function(message) {
                     for (let row of result.rows) {
                         console.log(JSON.stringify(row));
                     }
-                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wordlestats** to see your score distribution. See **$rules** for more details.`);
+                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wstats** to see your score distribution.`);
                     //console.log(result);
                     client.end();
                 });
@@ -584,7 +584,7 @@ client.on("messageCreate", function(message) {
                     for (let row of result.rows) {
                         console.log(JSON.stringify(row));
                     }
-                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$quordlestats** to see your score distribution. See **$rules** for more details.`);
+                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$qstats** to see your score distribution.`);
                     //console.log(result);
                     client.end();
                 });
