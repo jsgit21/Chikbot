@@ -659,9 +659,10 @@ client.on("messageCreate", function(message) {
                     // const embed = new MessageEmbed()
                     // embed.setImage(url);
                     // message.channel.send({embeds: [embed]});
-                    const attachment = new MessageAttachment(url, null, { content_type: 'image/png' });
+                    const attachment = new MessageAttachment(url);
                     message.channel.send({
-                        files: [attachment]
+                        files: [attachment],
+                        content_type: 'image/png',
                     });
     
                     // If the card searched is not an exact match, find alternatives
