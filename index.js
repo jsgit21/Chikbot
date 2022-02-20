@@ -693,7 +693,9 @@ client.on("messageCreate", function(message) {
     else if (message.content.match(mtgregex)) {
         //remove [[ ]]
         var msg = message.content.match(mtgregex)[0];
-        var cardname = msg.substring(2, message.content.length-2);
+        console.log("msg: ",msg);
+        var cardname = msg.substring(2, msg.length-2);
+        console.log("cardname: ",cardname);
 
         mtg.card.where({ name: cardname })
         .then(cards => {
