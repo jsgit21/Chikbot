@@ -661,7 +661,7 @@ client.on("messageCreate", function(message) {
                     // message.channel.send({embeds: [embed]});
                     const attachment = new MessageAttachment(url, "test");
                     message.channel.send({
-                        files: [`'${url}'`]
+                        files: [`${url}`]
                     })
     
                     // If the card searched is not an exact match, find alternatives
