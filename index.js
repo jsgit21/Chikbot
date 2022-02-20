@@ -660,17 +660,21 @@ client.on("messageCreate", function(message) {
                             suggested = cards.length;
                         }
     
-                        console.log("Did you mean: ");
-                        var outputString = "Did you mean: \n";
                         for (i = 1; i < suggested; i++){
-                            mySet.add(cards[i].name);
+                            if (cardFound != cards[i].name){
+                                mySet.add(cards[i].name);
+                            }
                         }
+
                         const setIterator = mySet.values();
+                        var outputString = "Did you mean: \n";
                         for (i=0; i < mySet.size; i++) {
                             outputString = outputString + "> "+setIterator.next().value+"\n";
                         }
                         console.log(outputString);
-                        message.channel.send(outputString);
+                        if(mySet.size > 0) {
+                            message.channel.send(outputString);
+                        }
                     }
     
                     
@@ -688,7 +692,8 @@ client.on("messageCreate", function(message) {
     }
     else if (message.content.match(mtgregex)) {
         //remove [[ ]]
-        var cardname = message.content.substring(2, message.content.length-2);
+        var msg = message.content.match(mtgregex)[0];
+        var cardname = msg.substring(2, message.content.length-2);
 
         mtg.card.where({ name: cardname })
         .then(cards => {
