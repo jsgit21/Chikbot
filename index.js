@@ -482,6 +482,12 @@ client.on("messageCreate", function(message) {
                 //console.log("array[x] = ",array[x], " array[x+1] = ",array[x+1]);
                 if (array[x] == '\ud83d' && array[x+1] == '\udfe5') {
                     redSquaresFound++;
+                    if (i == 1) {
+                        topquordleHeight = 9;
+                    }
+                    else if (i == 2){
+                        bottomquordleHeight = 9;
+                    }
                 }
             }
             for(j=0; j<splitQuordle[i].length; j++) {
