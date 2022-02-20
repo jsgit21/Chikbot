@@ -620,6 +620,13 @@ client.on("messageCreate", function(message) {
                 message.channel.send("I'm sorry, there was no match for that card.")
             }
         })
+        .catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            }
+          });
 
     }
 });
