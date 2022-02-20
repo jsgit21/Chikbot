@@ -9,6 +9,9 @@ var channel_id = require('./channel_id');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
+//Send online message to bottest channel:
+message.client.channels.cache.get(channel_id.personalbottest).send("Online!")
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -658,7 +661,10 @@ client.on("messageCreate", function(message) {
                     // embed.setImage(url);
                     // message.channel.send({embeds: [embed]});
                     const attachment = new MessageAttachment(url, "test");
-                    message.channel.send(attachment);
+                    message.channel.send({
+                        files: [attachment],
+                        content: 'test'
+                    });
     
                     // If the card searched is not an exact match, find alternatives
                     if (cardname.toLowerCase() != cardFound.toLowerCase()) {
