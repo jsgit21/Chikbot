@@ -656,13 +656,12 @@ client.on("messageCreate", function(message) {
     
                     //console.log("url: ", url)
     
-                    // const embed = new MessageEmbed()
-                    // embed.setImage(url);
-                    // message.channel.send({embeds: [embed]});
-                    const attachment = new MessageAttachment(url, "test");
-                    message.channel.send({
-                        files: [`${url}`]
-                    })
+                    const embed = new MessageEmbed()
+                    embed.setImage(url);
+                    message.channel.send({embeds: [embed]});
+                    // message.channel.send({
+                    //     files: [`${url}`]
+                    // })
     
                     // If the card searched is not an exact match, find alternatives
                     if (cardname.toLowerCase() != cardFound.toLowerCase()) {
