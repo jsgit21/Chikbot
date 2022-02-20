@@ -622,7 +622,10 @@ client.on("messageCreate", function(message) {
         }
 
         //remove [[ ]]
-        var cardname = message.content.substring(2, message.content.length-2);
+        var msg = message.content.match(mtgregex)[0];
+        console.log("msg: ",msg);
+        var cardname = msg.substring(2, msg.length-2);
+        console.log("cardname: ",cardname);
     
         mtg.card.where({ name: cardname })
         .then(async cards => {
@@ -689,39 +692,6 @@ client.on("messageCreate", function(message) {
             }
             
         })
-    }
-    else if (message.content.match(mtgregex)) {
-        //remove [[ ]]
-        var msg = message.content.match(mtgregex)[0];
-        console.log("msg: ",msg);
-        var cardname = msg.substring(2, msg.length-2);
-        console.log("cardname: ",cardname);
-
-        mtg.card.where({ name: cardname })
-        .then(cards => {
-            if(typeof cards[0] != 'undefined') {
-                console.log(cards[0].name) // "Squee, Goblin Nabob"
-
-                var url = cards[0].imageUrl;
-                const embed = new MessageEmbed()
-                embed.setImage(url);
-                message.channel.send({embeds: [embed]});
-
-                var suggested = 5;
-                if (cards.length < 5) {
-                    suggested = cards.length;
-                }
-
-                console.log("Did you mean:\n");
-                for (i = 1; i < suggested; i++){
-                    console.log(cards[i].name);
-                }
-            }
-            else {
-                message.channel.send("I'm sorry, there was no match for that card.")
-            }
-        })
-
     }
 });
 
