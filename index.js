@@ -616,6 +616,9 @@ client.on("messageCreate", function(message) {
                     console.log(cards[i].name);
                 }
             }
+            else {
+                message.channel.send("I'm sorry, there was no match for that card.")
+            }
         })
 
     }
