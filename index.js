@@ -9,11 +9,10 @@ var channel_id = require('./channel_id');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
-//Send online message to bottest channel:
-client.channels.cache.get(channel_id.personalbottest).send("Online!")
-
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    //Send online message to bottest channel:
+    client.channels.cache.get(channel_id.personalbottest).send('Online!');
 });
 
 function commandsToString(commands) {
