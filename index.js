@@ -661,7 +661,7 @@ client.on("messageCreate", function(message) {
                     // message.channel.send({embeds: [embed]});
                     const attachment = new MessageAttachment(url, "test");
                     message.channel.send({
-                        files: [attachment],
+                        attachments: [attachment],
                         content: 'test'
                     });
     
