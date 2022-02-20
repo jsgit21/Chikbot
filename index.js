@@ -661,7 +661,7 @@ client.on("messageCreate", function(message) {
                     // message.channel.send({embeds: [embed]});
                     const attachment = new MessageAttachment(url, "test");
                     message.channel.send({
-                        files: ['https://media.discordapp.net/attachments/446381224416772096/944637212232925275/IMG_1310.jpg?width=507&height=676']
+                        files: [`'${url}'`]
                     })
     
                     // If the card searched is not an exact match, find alternatives
