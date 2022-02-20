@@ -4,7 +4,7 @@ const fetch = require('node-fetch'); //import node fetch
 const mtg = require('mtgsdk');
 const { Client } = require('pg');
 const { MessageEmbed } = require('discord.js');
-import * as channel_id from "./channel_id";
+var channel_id = require('./channel_id');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
