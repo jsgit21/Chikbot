@@ -598,14 +598,17 @@ client.on("messageCreate", function(message) {
 
         mtg.card.where({ name: cardname })
         .then(cards => {
-            console.log(cards[0].name) // "Squee, Goblin Nabob"
-            var url = cards[0].imageUrl;
-            const embed = new MessageEmbed()
-            embed.setImage(url);
-            message.channel.send({embeds: [embed]});
-            console.log("Did you mean:\n");
-            for (i = 1; i < 5; i++){
-                console.log(cards[i].name);
+            console.log("cards[0] ", cards[0]);
+                if(typeof cards[0] != 'undefined') {
+                console.log(cards[0].name) // "Squee, Goblin Nabob"
+                var url = cards[0].imageUrl;
+                const embed = new MessageEmbed()
+                embed.setImage(url);
+                message.channel.send({embeds: [embed]});
+                console.log("Did you mean:\n");
+                for (i = 1; i < 5; i++){
+                    console.log(cards[i].name);
+                }
             }
         })
 
