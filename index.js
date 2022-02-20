@@ -659,7 +659,7 @@ client.on("messageCreate", function(message) {
                     // const embed = new MessageEmbed()
                     // embed.setImage(url);
                     // message.channel.send({embeds: [embed]});
-                    const attachment = new MessageAttachment(url, null, 'image/png');
+                    const attachment = new MessageAttachment(url, null, { content_type: 'image/png' });
                     message.channel.send({
                         files: [attachment]
                     });
