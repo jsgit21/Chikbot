@@ -4,6 +4,7 @@ const fetch = require('node-fetch'); //import node fetch
 const mtg = require('mtgsdk');
 const { Client } = require('pg');
 const { MessageEmbed } = require('discord.js');
+const { MessageAttachment } = require('discord.js');
 var channel_id = require('./channel_id');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
@@ -653,9 +654,11 @@ client.on("messageCreate", function(message) {
     
                     //console.log("url: ", url)
     
-                    const embed = new MessageEmbed()
-                    embed.setImage(url);
-                    message.channel.send({embeds: [embed]});
+                    // const embed = new MessageEmbed()
+                    // embed.setImage(url);
+                    // message.channel.send({embeds: [embed]});
+                    const attachment = new MessageAttachment(url, "test");
+                    message.channel.send(attachment);
     
                     // If the card searched is not an exact match, find alternatives
                     if (cardname.toLowerCase() != cardFound.toLowerCase()) {
