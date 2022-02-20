@@ -4,6 +4,7 @@ const fetch = require('node-fetch'); //import node fetch
 const mtg = require('mtgsdk');
 const { Client } = require('pg');
 const { MessageEmbed } = require('discord.js');
+import * as channel_id from "./channel_id";
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
@@ -66,8 +67,7 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle/quordle DB, time to reset!");
-    var wordleChannelID = '940720249454608414';
-    client.channels.cache.get(wordleChannelID).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
+    client.channels.cache.get(channel_id.wordlechat).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
 
     const con = new Client({
         connectionString: process.env.DATABASE_URL,
@@ -130,9 +130,12 @@ client.on("messageCreate", function(message) {
     if (message.author.bot) return;
 
     const channelId = message.channel.id;
-    const wordlechat = "940720249454608414";
-    if (channelId !== "941770101672267808" && channelId !== 
-    "941756769154252820" && channelId !== wordlechat) return;
+    if (channelId !== channel_id.chikbot && 
+        channelId !== channel_id.personalbottest && 
+        channelId !== channel_id.wordlechat &&
+        channelId !== channel_id.mtgchat)  {
+        return;
+    }
 
     var username = message.author.username;
     var userID = message.author.id;
