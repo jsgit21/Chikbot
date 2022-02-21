@@ -1,6 +1,8 @@
 const mtg = require('mtgsdk');
 const { MessageEmbed } = require('discord.js');
 
+const mtgregex = new RegExp("\\[\\[.*\\]\\]");
+
 async function getCardWithImage(cardname) {
     let promise = new Promise((resolve,reject) => {
         mtg.card.where({ name: cardname })
