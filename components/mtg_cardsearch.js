@@ -1,8 +1,6 @@
 const mtg = require('mtgsdk');
 const { MessageEmbed } = require('discord.js');
 
-const mtgregex = new RegExp("\\[\\[.*\\]\\]");
-
 async function getCardWithImage(cardname) {
     let promise = new Promise((resolve,reject) => {
         mtg.card.where({ name: cardname })
@@ -31,6 +29,7 @@ async function getCardWithImage(cardname) {
 }
 
 exports.cardSearch = (client, message) => {
+    const mtgregex = new RegExp("\\[\\[.*\\]\\]");
     //remove [[ ]] - Adjusted for pulling [[<name>]] anywhere within a message.
     var msg = message.match(mtgregex)[0];
     var cardname = msg.substring(2, msg.length-2);
