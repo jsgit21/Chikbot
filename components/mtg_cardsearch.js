@@ -62,7 +62,7 @@ exports.cardSearch = (client, channel, message) => {
 
                 const embed = new MessageEmbed()
                 embed.setImage(url);
-                client.message.channel.send({embeds: [embed]});
+                channel.send({embeds: [embed]});
                 // const attachment = new MessageAttachment(url);
                 // message.channel.send({
                 //     files: [attachment],
