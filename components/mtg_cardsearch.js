@@ -30,7 +30,7 @@ async function getCardWithImage(cardname) {
     return imgcard;
 }
 
-exports.cardSearch = (client, message) => {
+exports.cardSearch = (client, channel, message) => {
     //remove [[ ]] - Adjusted for pulling [[<name>]] anywhere within a message.
     var msg = message.match(mtgregex)[0];
     var cardname = msg.substring(2, msg.length-2);
@@ -54,7 +54,7 @@ exports.cardSearch = (client, message) => {
                     .catch(result =>{
                         //send error no card with img was found
                         console.log(result);
-                        client.message.channel.send(`${result} - It's probably broken Joe - see if this crashed the bot - should exit execution`)
+                        channel.send(`${result} - It's probably broken Joe - see if this crashed the bot - should exit execution`)
                     })
                 }
 
