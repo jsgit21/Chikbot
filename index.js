@@ -598,7 +598,7 @@ client.on("messageCreate", function(message) {
         });
     }
     else if (message.content.match(mtgregex)) {
-        mtg_cardsearch.cardSearch(client, message.channel, message.content);
+        mtg_cardsearch.cardSearch(message.channel, message.content);
     }
 });
 

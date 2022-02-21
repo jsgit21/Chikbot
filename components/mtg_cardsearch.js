@@ -30,7 +30,7 @@ async function getCardWithImage(cardname) {
     return imgcard;
 }
 
-exports.cardSearch = (client, channel, message) => {
+exports.cardSearch = (channel, message) => {
     //remove [[ ]] - Adjusted for pulling [[<name>]] anywhere within a message.
     var msg = message.match(mtgregex)[0];
     var cardname = msg.substring(2, msg.length-2);
@@ -90,7 +90,7 @@ exports.cardSearch = (client, channel, message) => {
                     }
                     //console.log(outputString);
                     if(mySet.size > 0) {
-                        client.message.channel.send(outputString);
+                        channel.send(outputString);
                     }
                 }
 
@@ -102,7 +102,7 @@ exports.cardSearch = (client, channel, message) => {
         }
         else {
             //console.log("No card was found!")
-            client.message.channel.send("No card was found!")
+            channel.send("No card was found!")
         }
         
     })
