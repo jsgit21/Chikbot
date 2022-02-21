@@ -455,7 +455,7 @@ client.on("messageCreate", function(message) {
         });
           
     }
-    else if ( message.content.match(qregex)) {
+    else if (message.content.match(qregex)) {
 
         //message.channel.send("Nice Qordle");
         var splitQuordle = message.content.split("\n");
@@ -512,10 +512,11 @@ client.on("messageCreate", function(message) {
                 }
             }
         }
-        console.log("guessScore: ",guessScore);
-        console.log("numsfound: ",numsfound);
-        console.log("topquordleHeight: ", topquordleHeight);
-        console.log("bottomquordleHeight: ", bottomquordleHeight);
+
+        //console.log("guessScore: ",guessScore);
+        //console.log("numsfound: ",numsfound);
+        //console.log("topquordleHeight: ", topquordleHeight);
+        //console.log("bottomquordleHeight: ", bottomquordleHeight);
 
         if (topquordleHeight == -1){
             topquordleHeight = 9;
