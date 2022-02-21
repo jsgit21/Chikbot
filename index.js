@@ -122,6 +122,7 @@ const commandList = {
     "$qstats <name>":"Check another user's quordle stats tracked in discord",
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
+const mtgregex = new RegExp("\\[\\[.*\\]\\]");
 const qregex = new RegExp("Daily Quordle #[0-9].*\n");
 const prefix = "$";
 
