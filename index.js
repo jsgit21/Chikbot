@@ -69,7 +69,7 @@ function msTillWordleReset() {
 
 function resetWordleDB() {
     console.log("Resetting wordle/quordle DB, time to reset!");
-    client.channels.cache.get(channel_id.wordlechat).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
+    //client.channels.cache.get(channel_id.wordlechat).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
 
     const con = new Client({
         connectionString: process.env.DATABASE_URL,
