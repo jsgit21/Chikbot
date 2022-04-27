@@ -8,6 +8,8 @@ const mtg_cardsearch = require('./components/mtg_cardsearch');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
 
+const RUNLOCAL = true;
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     //Send online message to bottest channel:
@@ -71,12 +73,25 @@ function resetWordleDB() {
     console.log("Resetting wordle/quordle DB, time to reset!");
     //client.channels.cache.get(channel_id.wordlechat).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
 
-    const con = new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false
-        }
-    });
+    if (RUNLOCAL) {
+        //Connect to local database outlined in .env
+        const con = new Client({
+            user: process.env.PGUSER,
+            host: process.env.PGHOST,
+            database: process.env.PGDATABASE,
+            password: process.env.PGPASSWORD,
+            port: process.env.PGPORT,
+        });
+    }
+    else {
+        //Connect with heroku
+        const con = new Client({
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+                rejectUnauthorized: false
+            }
+        });
+    }
 
     con.connect(function(err) {
         if (err) throw err;
@@ -214,12 +229,25 @@ client.on("messageCreate", function(message) {
 
             //Uses default .ENV parameters specified in .ENV file
             //https://node-postgres.com/features/connecting
-            const client = new Client({
-                connectionString: process.env.DATABASE_URL,
-                ssl: {
-                    rejectUnauthorized: false
-                }
-            });
+            if (RUNLOCAL) {
+                //Connect to local database outlined in .env
+                const client = new Client({
+                    user: process.env.PGUSER,
+                    host: process.env.PGHOST,
+                    database: process.env.PGDATABASE,
+                    password: process.env.PGPASSWORD,
+                    port: process.env.PGPORT,
+                });
+            }
+            else {
+                //Connect with heroku
+                const client = new Client({
+                    connectionString: process.env.DATABASE_URL,
+                    ssl: {
+                        rejectUnauthorized: false
+                    }
+                });
+            }
     
             client.connect(function(err) {
                 if (err) throw err;
@@ -292,12 +320,25 @@ client.on("messageCreate", function(message) {
 
             //Uses default .ENV parameters specified in .ENV file
             //https://node-postgres.com/features/connecting
-            const client = new Client({
-                connectionString: process.env.DATABASE_URL,
-                ssl: {
-                    rejectUnauthorized: false
-                }
-            });
+            if (RUNLOCAL) {
+                //Connect to local database outlined in .env
+                const client = new Client({
+                    user: process.env.PGUSER,
+                    host: process.env.PGHOST,
+                    database: process.env.PGDATABASE,
+                    password: process.env.PGPASSWORD,
+                    port: process.env.PGPORT,
+                });
+            }
+            else {
+                //Connect with heroku
+                const client = new Client({
+                    connectionString: process.env.DATABASE_URL,
+                    ssl: {
+                        rejectUnauthorized: false
+                    }
+                });
+            }
     
             client.connect(function(err) {
                 if (err) throw err;
@@ -413,12 +454,25 @@ client.on("messageCreate", function(message) {
 
         //Uses default .ENV parameters specified in .ENV file
         //https://node-postgres.com/features/connecting
-        const client = new Client({
-            connectionString: process.env.DATABASE_URL,
-            ssl: {
-                rejectUnauthorized: false
-            }
-        });
+        if (RUNLOCAL) {
+            //Connect to local database outlined in .env
+            const client = new Client({
+                user: process.env.PGUSER,
+                host: process.env.PGHOST,
+                database: process.env.PGDATABASE,
+                password: process.env.PGPASSWORD,
+                port: process.env.PGPORT,
+            });
+        }
+        else {
+            //Connect with heroku
+            const client = new Client({
+                connectionString: process.env.DATABASE_URL,
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            });
+        }
 
         client.connect(function(err) {
             if (err) throw err;
@@ -556,12 +610,25 @@ client.on("messageCreate", function(message) {
 
         //Uses default .ENV parameters specified in .ENV file
         //https://node-postgres.com/features/connecting
-        const client = new Client({
-            connectionString: process.env.DATABASE_URL,
-            ssl: {
-                rejectUnauthorized: false
-            }
-        });
+        if (RUNLOCAL) {
+            //Connect to local database outlined in .env
+            const client = new Client({
+                user: process.env.PGUSER,
+                host: process.env.PGHOST,
+                database: process.env.PGDATABASE,
+                password: process.env.PGPASSWORD,
+                port: process.env.PGPORT,
+            });
+        }
+        else {
+            //Connect with heroku
+            const client = new Client({
+                connectionString: process.env.DATABASE_URL,
+                ssl: {
+                    rejectUnauthorized: false
+                }
+            });
+        }
 
         client.connect(function(err) {
             if (err) throw err;
