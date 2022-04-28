@@ -92,3 +92,19 @@ Luckily I have a great group of friends that wanted to see just how quickly they
 * The bot will not except your game scores if they are not in the expected format provided from the official game.
 
 Another thing to consider is parsing these scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle/Quordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
+
+# Magic The Gathering API
+Magic The Gathering is a strategy card game that I enjoy playing with friends from time to time. Although there are already bots out there that do this kind of thing very well, I wanted to have my own home grown solution to sharing/talking about cards among friends. So I utilized an neat API to help me search for cards and display them.
+
+#### \[\[\<name\>\]\]
+You can search for any card by wrapping the name you want to search in double brackets. You can even include that in the middle of any text, as my implementation of regex only cares about whatever is inside the opening and closing double brackets. As you can see I provided a name that was not found as a full match - When this is the case, Chikbot will provide back the best match, and also list posibilities of other cards (up to 5) below the shown card.
+
+![Searching for any MTG card](./Images/mtg1.png)
+
+If you search for a card and there is an exact match or only one match, there will be no other posibilities listed below
+
+![Searching for a specific MTG card](./Images/mtg2.png)
+
+Of course, if you search for a card that doesn't exist, Chikbot will let you know.
+
+![Searching for a card that doesn't exist](./Images/mtg3.png)
