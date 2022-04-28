@@ -32,6 +32,8 @@ The driving idea behind me building Chikbot in the first place was to gather Wor
 
 ![Official wordle scores](./Images/WordleStatsReal.png)
 
+**Now, lets see how it works with Chikbot**
+
 Here you can see Chikbot checks the chat for any pasted Wordle scores, utilizing regex and some other checks and balances to make sure the score that was posted is how a pasted wordle score should look.
 
 ![Submitting a wordle score](./Images/wordle1.png)
