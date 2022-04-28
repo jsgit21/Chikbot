@@ -114,6 +114,23 @@ There's not much to say when it comes to a good dad joke, One of my friends ment
 
 ![Getting a dad joke from Chikbot](./Images/dadjoke.png)
 
+# The Future of Chikbot
+I am first focusing on tweaking my code to ensure that is manageable and scalable before I add many more features. This is not only a passion project, but a way for me to learn and explore. Here are some things I'd like to implement as I continue to grow Chikbot in my spare time. 
+
+### Magic The Gathering API
+* When searching for a card and "Did you mean" options are displayed, I would like to have Chikbot number those cards 1-5. Underneath the Image of the card displayed, there will be reactions of numbers 1-5. This way, if the user meant the card that is listed as 2. they can just react with "2" and Chikbot will search/display the card for them without having to retype it out. It would look something like this:
+
+![Future implementation of MTG card search](./Images/mtg4Future.png)
+
+### Creating a List of Goals
+My discord houses a lot of people who are primarily gamers at heart. It was suggested to have a channel where people can post a list of their goals, and then go back and check/cross them off once they've been achieved. I thought that this idea could be a really fun implementation for Chikbot to support. Some commands that might come with a feature like this:
+
+* $goals add <description> - add a goal to your list
+* $goals - show your current goals
+* $goals <name> - show the current goals of a user
+* $goals complete <goal number> - mark a goal as completed
+* $goals delete <goal number> - remove a goal from your list
+
 # References
 Discord.js https://discord.js.org/#/
 
