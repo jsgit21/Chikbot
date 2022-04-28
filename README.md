@@ -1,6 +1,15 @@
 # Chikbot
 Chikbot was born as a passion project around the time Wordle became popular. For a while I knew I wanted to build a Discord bot and experiment with what potential it could bring to my Discord server. The initial inspiration was being able to track individual's Wordle scores from day to day as a bit of friendly competition. After getting comfortable with the Node.js module known as Discord.js. I began to implement other functionality as well as work to have it fully hosted on Heroku utilizing a PostgreSQL database for storing my data.
 
+# Table of Contents
+[Getting Started]()
+[Wordle Support]()
+[Quordle Support]()
+[Validation and Error checking]()
+[Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api)
+[Dad Jokes API]()
+[The Future of Chikbot]()
+
 ### User Stories
 
 - [x] Implement basic commands/functionality for the bot to be utilized by users in the discord
@@ -81,7 +90,7 @@ Thankfully BobTheCat is much better at quordle than myself, as you can tell by t
 
 ![Checking a friends Quordle score](./Images/quordle3.png)
 
-### Validation and Error checking ❗❗
+# ❗ Validation and Error checking ❗
 
 Luckily I have a great group of friends that wanted to see just how quickly they could break my bot as I was rolling the wordle functionality out, and I'll admit they were pretty creative!
 
