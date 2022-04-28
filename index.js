@@ -1,12 +1,14 @@
 require('dotenv').config(); //initialize dotenv
 const Discord = require('discord.js'); //import discord.js
 const fetch = require('node-fetch'); //import node fetch
-const { Client } = require('pg');
+const db = require('./database/index')
+const { Pool } = require('pg');
 
 const channel_id = require('./data/channel_id');
 const mtg_cardsearch = require('./components/mtg_cardsearch');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
+
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -71,33 +73,20 @@ function resetWordleDB() {
     console.log("Resetting wordle/quordle DB, time to reset!");
     //client.channels.cache.get(channel_id.wordlechat).send('Wordle and Quordle has been reset (EST) and scores may be submitted again, hooray!');
 
-    const con = new Client({
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false
+    var wordle = `UPDATE wordle SET playedtoday = 'f'`;
+    var quordle = `UPDATE quordle SET playedtoday = 'f'`;
+    db.query(wordle, function (err, result) {
+        if (err) throw err;
+        for (let row of result.rows) {
+            console.log(JSON.stringify(row));
         }
     });
 
-    con.connect(function(err) {
+    db.query(quordle, function (err, result) {
         if (err) throw err;
-        console.log("Connected!");
-        var wordle = `UPDATE wordle SET playedtoday = 'f'`;
-        var quordle = `UPDATE quordle SET playedtoday = 'f'`;
-
-        con.query(wordle, function (err, result) {
-            if (err) throw err;
-            for (let row of result.rows) {
-                console.log(JSON.stringify(row));
-            }
-        });
-
-        con.query(quordle, function (err, result) {
-            if (err) throw err;
-            for (let row of result.rows) {
-                console.log(JSON.stringify(row));
-            }
-            con.end();
-        });
+        for (let row of result.rows) {
+            console.log(JSON.stringify(row));
+        }
     });
 
     var waitTimeMS = msTillWordleReset();
@@ -113,13 +102,13 @@ const commandList = {
     "$hi":"Say hello to Chikbot",
     "$ping":"Pongs back with latency between messages",
     "$chiken":"Bwakk bwakk!",
-    "$keys":"Who got the key?",
-    "$dadjoke":"Get a random dad joke!",
     "$breakchikbot":"That's rude.",
+    "$dadjoke":"Get a random dad joke!",
     "$wstats":"Check for your wordle stats tracked in discord",
-    "$wstats <name>":"Check another user's wordle stats tracked in discord",
+    "$wstats <name>":"Check another user's Wordle stats tracked in discord",
     "$qstats":"Check for your quordle stats tracked in discord",
-    "$qstats <name>":"Check another user's quordle stats tracked in discord",
+    "$qstats <name>":"Check another user's Quordle stats tracked in discord",
+    "[[<name>]]":"Surround the name of a Magic the Gathering card in double brackets to have Chikbot find a card that best matches the name"
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
 const mtgregex = new RegExp("\\[\\[.*\\]\\]");
@@ -211,66 +200,50 @@ client.on("messageCreate", function(message) {
                     return;
                 }
             }
-
-            //Uses default .ENV parameters specified in .ENV file
-            //https://node-postgres.com/features/connecting
-            const client = new Client({
-                connectionString: process.env.DATABASE_URL,
-                ssl: {
-                    rejectUnauthorized: false
-                }
-            });
     
-            client.connect(function(err) {
+            if (commandFlag == '') {
+                var sql = `SELECT * FROM wordle WHERE userid='${userID}'`;
+            }
+            else {
+                var sql = `SELECT * FROM wordle WHERE name='${commandFlag}'`;
+            }
+            db.query(sql, function (err, result) {
                 if (err) throw err;
-                console.log("Connected!");
+                for (let row of result.rows) {
+                    console.log(JSON.stringify(row));
+                }
+                //console.log(result['rows'][0]);
 
-                if (commandFlag == '') {
-                    var sql = `SELECT * FROM wordle WHERE userid='${userID}'`;
+                if (result['rows'].length != 0) {
+                    var userinfo = result['rows'][0];
+
+                    var biggest = 1;
+                    var gameswon = 0;
+                    var nums = [userinfo.one, userinfo.two, userinfo.three, userinfo.four, userinfo.five, userinfo.six];
+                    for (i = 0; i < 6; i++) {
+                        gameswon = gameswon + nums[i];
+                        if (nums[i] > biggest) {
+                            biggest = nums[i];
+                        }
+                    }
+                    var displaybar = []
+                    for (i = 0; i < 6; i++) {
+                        numofx = (nums[i]/biggest)*16;
+                        displaybar[i] = '>'.repeat(numofx);
+                        displaybar[i] = displaybar[i] + " ";
+                    }
+                    var gameslost = userinfo.total - gameswon;
+
+                    message.reply(`\n**GUESS DISTRIBUTION**\`\`\`py\n@ ${userinfo.name}\n\`\`\`\`\`\`prolog\n1/6 ->${displaybar[0]}${userinfo.one}\n2/6 ->${displaybar[1]}${userinfo.two}\n3/6 ->${displaybar[2]}${userinfo.three}\n4/6 ->${displaybar[3]}${userinfo.four}\n5/6 ->${displaybar[4]}${userinfo.five}\n6/6 ->${displaybar[5]}${userinfo.six}\n\`\`\`\`\`\`prolog\nGames Lost = ${gameslost}\nTotal Played = ${userinfo.total}\n\`\`\``)
                 }
                 else {
-                    var sql = `SELECT * FROM wordle WHERE name='${commandFlag}'`;
-                }
-                client.query(sql, function (err, result) {
-                    if (err) throw err;
-                    for (let row of result.rows) {
-                        console.log(JSON.stringify(row));
-                    }
-                    //console.log(result['rows'][0]);
-
-                    if (result['rows'].length != 0) {
-                        var userinfo = result['rows'][0];
-
-                        var biggest = 1;
-                        var gameswon = 0;
-                        var nums = [userinfo.one, userinfo.two, userinfo.three, userinfo.four, userinfo.five, userinfo.six];
-                        for (i = 0; i < 6; i++) {
-                            gameswon = gameswon + nums[i];
-                            if (nums[i] > biggest) {
-                                biggest = nums[i];
-                            }
-                        }
-                        var displaybar = []
-                        for (i = 0; i < 6; i++) {
-                            numofx = (nums[i]/biggest)*16;
-                            displaybar[i] = '>'.repeat(numofx);
-                            displaybar[i] = displaybar[i] + " ";
-                        }
-                        var gameslost = userinfo.total - gameswon;
-
-                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`py\n@ ${userinfo.name}\n\`\`\`\`\`\`prolog\n1/6 ->${displaybar[0]}${userinfo.one}\n2/6 ->${displaybar[1]}${userinfo.two}\n3/6 ->${displaybar[2]}${userinfo.three}\n4/6 ->${displaybar[3]}${userinfo.four}\n5/6 ->${displaybar[4]}${userinfo.five}\n6/6 ->${displaybar[5]}${userinfo.six}\n\`\`\`\`\`\`prolog\nGames Lost = ${gameslost}\nTotal Played = ${userinfo.total}\n\`\`\``)
+                    if (commandFlag == '') {
+                        message.reply(`You were not found in the Wordle database.\nBegin playing Wordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
                     }
                     else {
-                        if (commandFlag == '') {
-                            message.reply(`You were not found in the Wordle database.\nBegin playing Wordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
-                        }
-                        else {
-                            message.reply(`The user **${commandFlag}** was not found in the Wordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Wordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
-                        }
+                        message.reply(`The user **${commandFlag}** was not found in the Wordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Wordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
                     }
-
-                    client.end();
-                });
+                }
             });
         }
         else if (commandBody == "qstats") {
@@ -290,65 +263,50 @@ client.on("messageCreate", function(message) {
                 }
             }
 
-            //Uses default .ENV parameters specified in .ENV file
-            //https://node-postgres.com/features/connecting
-            const client = new Client({
-                connectionString: process.env.DATABASE_URL,
-                ssl: {
-                    rejectUnauthorized: false
-                }
-            });
-    
-            client.connect(function(err) {
-                if (err) throw err;
-                console.log("Connected!");
+            if (commandFlag == '') {
+                var sql = `SELECT * FROM quordle WHERE userid='${userID}'`;
+            }
+            else {
+                var sql = `SELECT * FROM quordle WHERE name='${commandFlag}'`;
+            }
 
-                if (commandFlag == '') {
-                    var sql = `SELECT * FROM quordle WHERE userid='${userID}'`;
+            db.query(sql, function (err, result) {
+                if (err) throw err;
+                for (let row of result.rows) {
+                    console.log(JSON.stringify(row));
+                }
+                //console.log(result['rows'][0]);
+
+                if (result['rows'].length != 0) {
+                    var userinfo = result['rows'][0];
+
+                    var biggest = 1;
+                    var gameswon = 0;
+                    var nums = [userinfo.four, userinfo.five, userinfo.six, userinfo.seven, userinfo.eight, userinfo.nine];
+                    for (i = 0; i < 6; i++) {
+                        gameswon = gameswon + nums[i];
+                        if (nums[i] > biggest) {
+                            biggest = nums[i];
+                        }
+                    }
+                    var displaybar = []
+                    for (i = 0; i < 6; i++) {
+                        numofx = (nums[i]/biggest)*16;
+                        displaybar[i] = '>'.repeat(numofx);
+                        displaybar[i] = displaybar[i] + " ";
+                    }
+                    var gameslost = userinfo.total - gameswon;
+
+                    message.reply(`\n**GUESS DISTRIBUTION**\`\`\`py\n@ ${userinfo.name}\n\`\`\`\`\`\`prolog\n4/9 ->${displaybar[0]}${userinfo.four}\n5/9 ->${displaybar[1]}${userinfo.five}\n6/6 ->${displaybar[2]}${userinfo.six}\n7/9 ->${displaybar[3]}${userinfo.seven}\n8/9 ->${displaybar[4]}${userinfo.eight}\n9/9 ->${displaybar[5]}${userinfo.nine}\n\`\`\`\`\`\`prolog\nGames Lost = ${gameslost}\nTotal Played = ${userinfo.total}\n\`\`\``)
                 }
                 else {
-                    var sql = `SELECT * FROM quordle WHERE name='${commandFlag}'`;
-                }
-                client.query(sql, function (err, result) {
-                    if (err) throw err;
-                    for (let row of result.rows) {
-                        console.log(JSON.stringify(row));
-                    }
-                    //console.log(result['rows'][0]);
-
-                    if (result['rows'].length != 0) {
-                        var userinfo = result['rows'][0];
-
-                        var biggest = 1;
-                        var gameswon = 0;
-                        var nums = [userinfo.four, userinfo.five, userinfo.six, userinfo.seven, userinfo.eight, userinfo.nine];
-                        for (i = 0; i < 6; i++) {
-                            gameswon = gameswon + nums[i];
-                            if (nums[i] > biggest) {
-                                biggest = nums[i];
-                            }
-                        }
-                        var displaybar = []
-                        for (i = 0; i < 6; i++) {
-                            numofx = (nums[i]/biggest)*16;
-                            displaybar[i] = '>'.repeat(numofx);
-                            displaybar[i] = displaybar[i] + " ";
-                        }
-                        var gameslost = userinfo.total - gameswon;
-
-                        message.reply(`\n**GUESS DISTRIBUTION**\`\`\`py\n@ ${userinfo.name}\n\`\`\`\`\`\`prolog\n4/9 ->${displaybar[0]}${userinfo.four}\n5/9 ->${displaybar[1]}${userinfo.five}\n6/6 ->${displaybar[2]}${userinfo.six}\n7/9 ->${displaybar[3]}${userinfo.seven}\n8/9 ->${displaybar[4]}${userinfo.eight}\n9/9 ->${displaybar[5]}${userinfo.nine}\n\`\`\`\`\`\`prolog\nGames Lost = ${gameslost}\nTotal Played = ${userinfo.total}\n\`\`\``)
+                    if (commandFlag == '') {
+                        message.reply(`You were not found in the Quordle database.\nBegin playing Quordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
                     }
                     else {
-                        if (commandFlag == '') {
-                            message.reply(`You were not found in the Quordle database.\nBegin playing Quordle daily and sharing your scores in the \`#»🚾wordle-chat\` channel.`)
-                        }
-                        else {
-                            message.reply(`The user **${commandFlag}** was not found in the Quordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Quordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
-                        }
+                        message.reply(`The user **${commandFlag}** was not found in the Quordle database\n\`\`\`Please use their name as it appears in their discord tag <NAME>#0000\`\`\`\nIf you're using the correct NAME, they can begin playing Quordle daily and sharing their scores in the \`#»🚾wordle-chat\` channel.`) 
                     }
-
-                    client.end();
-                });
+                }
             });
         }
         
@@ -411,47 +369,31 @@ client.on("messageCreate", function(message) {
             console.log(scoreAdder)
         }
 
-        //Uses default .ENV parameters specified in .ENV file
-        //https://node-postgres.com/features/connecting
-        const client = new Client({
-            connectionString: process.env.DATABASE_URL,
-            ssl: {
-                rejectUnauthorized: false
-            }
-        });
-
-        client.connect(function(err) {
+        var query = `SELECT * FROM wordle WHERE userid='${userID}'`;
+        
+        db.query(query, function (err, result) {
             if (err) throw err;
-            console.log("Connected!");
+            var playerstats = result['rows'][0];
+            console.log(playerstats);
 
-            var query = `SELECT * FROM wordle WHERE userid='${userID}'`;
-            
-            client.query(query, function (err, result) {
-                if (err) throw err;
-                var playerstats = result['rows'][0];
-                console.log(playerstats);
-
-                if (result['rows'].length != 0) {
-                    if (playerstats.playedtoday) {
-                        message.channel.send(`Sorry ${tagUser} - It looks like you've already submitted a Wordle score today.`);
-                        client.end();
-                        return;
-                    }
+            if (result['rows'].length != 0) {
+                if (playerstats.playedtoday) {
+                    message.channel.send(`Sorry ${tagUser} - It looks like you've already submitted a Wordle score today.`);
+                    return;
                 }
+            }
 
-                query = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET one=wordle.one+${scoreAdder[0]}, two=wordle.two+${scoreAdder[1]}, three=wordle.three+${scoreAdder[2]}, four=wordle.four+${scoreAdder[3]}, five=wordle.five+${scoreAdder[4]}, six=wordle.six+${scoreAdder[5]}, total=wordle.total+1, playedtoday='t'`;
-            
-                client.query(query,scoreAdder, function (err, result) {
-                    if (err) throw err;
-                    for (let row of result.rows) {
-                        console.log(JSON.stringify(row));
-                    }
-                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wstats** to see your score distribution.`);
-                    //console.log(result);
-                    client.end();
-                });
-
+            query = `INSERT INTO wordle (one, two, three, four, five, six, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET one=wordle.one+${scoreAdder[0]}, two=wordle.two+${scoreAdder[1]}, three=wordle.three+${scoreAdder[2]}, four=wordle.four+${scoreAdder[3]}, five=wordle.five+${scoreAdder[4]}, six=wordle.six+${scoreAdder[5]}, total=wordle.total+1, playedtoday='t'`;
+        
+            db.query(query,scoreAdder, function (err, result) {
+                if (err) throw err;
+                for (let row of result.rows) {
+                    console.log(JSON.stringify(row));
+                }
+                message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wstats** to see your score distribution.`);
+                //console.log(result);
             });
+
         });
           
     }
@@ -554,48 +496,32 @@ client.on("messageCreate", function(message) {
         console.log(quordleData)
         console.log("Red Squares Found: ", redSquaresFound);
 
-        //Uses default .ENV parameters specified in .ENV file
-        //https://node-postgres.com/features/connecting
-        const client = new Client({
-            connectionString: process.env.DATABASE_URL,
-            ssl: {
-                rejectUnauthorized: false
-            }
-        });
-
-        client.connect(function(err) {
+        var query = `SELECT * FROM quordle WHERE userid='${userID}'`;
+        db.query(query, function (err, result) {
             if (err) throw err;
-            console.log("Connected!");
+            //console.log("RESULT: ", result);
+            var playerstats = result['rows'][0];
+            console.log(playerstats);
 
-            var query = `SELECT * FROM quordle WHERE userid='${userID}'`;
-            
-            client.query(query, function (err, result) {
-                if (err) throw err;
-                //console.log("RESULT: ", result);
-                var playerstats = result['rows'][0];
-                console.log(playerstats);
-
-                if (result['rows'].length != 0) {
-                    if (playerstats.playedtoday) {
-                        message.channel.send(`Sorry ${tagUser} - It looks like you've already submitted a Quordle score today.`);
-                        client.end();
-                        return;
-                    }
-                }
-
-                query = `INSERT INTO quordle (four, five, six, seven, eight, nine, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET four=quordle.four+${quordleData[0]}, five=quordle.five+${quordleData[1]}, six=quordle.six+${quordleData[2]}, seven=quordle.seven+${quordleData[3]}, eight=quordle.eight+${quordleData[4]}, nine=quordle.nine+${quordleData[5]}, total=quordle.total+1, playedtoday='t'`;
-            
-                client.query(query, quordleData, function (err, result) {
-                    if (err) throw err;
-                    for (let row of result.rows) {
-                        console.log(JSON.stringify(row));
-                    }
-                    message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$qstats** to see your score distribution.`);
-                    //console.log(result);
+            if (result['rows'].length != 0) {
+                if (playerstats.playedtoday) {
+                    message.channel.send(`Sorry ${tagUser} - It looks like you've already submitted a Quordle score today.`);
                     client.end();
-                });
+                    return;
+                }
+            }
 
+            query = `INSERT INTO quordle (four, five, six, seven, eight, nine, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET four=quordle.four+${quordleData[0]}, five=quordle.five+${quordleData[1]}, six=quordle.six+${quordleData[2]}, seven=quordle.seven+${quordleData[3]}, eight=quordle.eight+${quordleData[4]}, nine=quordle.nine+${quordleData[5]}, total=quordle.total+1, playedtoday='t'`;
+        
+            db.query(query, quordleData, function (err, result) {
+                if (err) throw err;
+                for (let row of result.rows) {
+                    console.log(JSON.stringify(row));
+                }
+                message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$qstats** to see your score distribution.`);
+                //console.log(result);
             });
+
         });
     }
     else if (message.content.match(mtgregex)) {
