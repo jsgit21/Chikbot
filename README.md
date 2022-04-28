@@ -8,9 +8,9 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 
 ### Additional User Stories
 - [x] Quordle support (Alteration of Wordle, web browser game; https://www.quordle.com/#/ )
-- [x] Dad Joke API Implementation https://icanhazdadjoke.com/api
 - [x] Magic The Gathering API Implementation https://docs.magicthegathering.io/
   - [x] Search for Magic The Gathering playing cards and display them to the user
+- [x] Dad Joke API Implementation https://icanhazdadjoke.com/api
 - [ ] Create functionality for users to create Tasks/Goals list
 - [ ] Implement self-assign user roles through Chikbot
 
@@ -56,6 +56,23 @@ If you search for a user incorrectly or search for someone who isn't in the data
 
 ![searching for a user that doesn't exist](./Images/wordle5.png)
 
+# Extending to Quordle
+Quordle... was something that was brought to my attention, essentially being an extension of Wordle. Many of you know that after Wordle, many Wordle-inspired games started spreading like wildfire. Essentially Quordle is where you try to solve four different Wordle games at the same time. There just so happens to now be an Octordle and Sedecordle... which, Chikbot told me he doesn't wan't to deal with parsing those!
+
+Here you can see similar to Wordle, Chikbot is keeping an eye out for any official Quordle scores that are posted. This also utilizes regex and other checks to make sure it is in the official format.
+
+![Submitting a Quordle score](./Images/quordle1.png)
+
+#### $qstats
+After submitting a Quordle at least once, you can check your stats. Unfortunately the only Quordle I've submitted was me not succeeding at completeing it, as you can tell by my pasted score. Which is why you don't see any change in my distribution but it has 1 game loss listed.
+
+![Checking the Quordle score](./Images/quordle2.png)
+
+#### $qstats \<name\>
+Thankfully BobTheCat is much better at quordle than myself, as you can tell by their scores. Also similar to Wordle, you will recieve the same message if you search for someone who does not exist in the Quordle database.
+
+![Checking a friends Quordle score](./Images/quordle3.png)
+
 ### Validation and Error checking ❗❗
 
 Luckily I have a great group of friends that wanted to see just how quickly they could break my bot as I was rolling the wordle functionality out, and I'll admit they were pretty creative!
@@ -66,7 +83,4 @@ Luckily I have a great group of friends that wanted to see just how quickly they
 
 * The bot will not except your game scores if they are not in the expected format provided from the official game.
 
-Another thing to consider is parsing wordle scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
-
-# Extending to Quordle
-Quordle... was something that was brought to my attention, essentially being an extension of Wordle. Many of you know that after Wordle, many Wordle-inspired games started spreading like wildfire. Essentially Quordle is where you try to solve four different Wordle games at the same time. There just so happens to now be an Octordle and Sedecordle... which, Chikbot told me he doesn't wan't to deal with parsing those!
+Another thing to consider is parsing these scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle/Quordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
