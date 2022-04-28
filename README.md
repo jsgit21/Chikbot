@@ -2,19 +2,14 @@
 Chikbot was born as a passion project around the time Wordle became popular. For a while I knew I wanted to build a Discord bot and experiment with what potential it could bring to my Discord server. The initial inspiration was being able to track individual's Wordle scores from day to day as a bit of friendly competition. After getting comfortable with the Node.js module known as Discord.js. I began to implement other functionality as well as work to have it fully hosted on Heroku utilizing a PostgreSQL database for storing my data.
 
 # Table of Contents
-[Getting Started]()
-
-[Wordle Support]()
-
-[Quordle Support]()
-
-[Validation and Error checking]()
-
-[Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api)
-
-[Dad Jokes API]()
-
-[The Future of Chikbot]()
+* [User Stories](https://github.com/jsgit21/Chikbot/blob/master/README.md#user-stories)
+* [Getting Started](https://github.com/jsgit21/Chikbot/blob/master/README.md#getting-started)
+* [Wordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#wordle-support)
+* [Quordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#extending-to-quordle)
+* [Validation and Error checking](https://github.com/jsgit21/Chikbot/blob/master/README.md#validation-and-error-checking-)
+* [Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api)
+* [Dad Jokes API](https://github.com/jsgit21/Chikbot/blob/master/README.md#dad-jokes)
+* [The Future of Chikbot](https://github.com/jsgit21/Chikbot/blob/master/README.md#the-future-of-chikbot)
 
 ### User Stories
 
@@ -34,6 +29,8 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 Initially, when I was learning how to build my discord bot I started with the basics. A few commands, and of course a few of them to mess with my friends while I was getting myself situated.
 
 ![Using a very basic command for Chikbot](./Images/Intro1.png)
+
+#### $commands
 
 Here's a basic idea of the commands that Chikbot is currently supporting:
 
