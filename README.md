@@ -56,9 +56,14 @@ If you search for a user incorrectly or search for someone who isn't in the data
 
 ![searching for a user that doesn't exist](./Images/wordle5.png)
 
-### Some considerations to be aware of ❗❗ 
+### Validation and Error checking ❗❗ 
 
-Parsing wordle scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
+Luckily I have a great group of friends that wanted to see just how quickly they could break my bot as I was rolling the wordle functionality out, and I'll admit they were pretty creative!
+
+..* Names that are too long to be discord names instantly fail when searching for other user stats
+..* The bot is protected from breaking while parsing random emojis 
+
+Another thing to consider is parsing wordle scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
 
 # Extending to Quordle
 Quordle... was something that was brought to my attention, essentially being an extension of Wordle. Many of you know that after Wordle, many Wordle-inspired games started spreading like wildfire. Essentially Quordle is where you try to solve four different Wordle games at the same time. There just so happens to now be an Octordle and Sedecordle... which, Chikbot told me he doesn't wan't to deal with parsing those!
