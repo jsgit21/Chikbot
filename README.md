@@ -34,7 +34,7 @@ The driving idea behind me building Chikbot in the first place was to gather Wor
 
 **Now, lets see how it works with Chikbot**
 
-Here you can see Chikbot checks the chat for any pasted Wordle scores, utilizing regex and some other checks and balances to make sure the score that was posted is how a pasted wordle score should look.
+If you're not familiar with sharing Wordle scores, wordle provides a 1-click button that copies the "Wordle score" to your clipboard so you can share with friends. It's only descriptive enough to see the score, but doesn't spoil what the daily word is. Here you can see Chikbot checks the chat for any pasted Wordle scores, utilizing regex and some other checks and balances to make sure the score that was posted is how a pasted wordle score should look.
 
 ![Submitting a wordle score](./Images/wordle1.png)
 
