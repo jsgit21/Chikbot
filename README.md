@@ -102,7 +102,7 @@ Thankfully BobTheCat is much better at quordle than myself, as you can tell by t
 
 ![Checking a friends Quordle score](./Images/quordle3.png)
 
-# ❗ Validation and Error checking ❗
+# Validation and Error checking
 [Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
 
 Luckily I have a great group of friends that wanted to see just how quickly they could break my bot as I was rolling the wordle functionality out, and I'll admit they were pretty creative!
