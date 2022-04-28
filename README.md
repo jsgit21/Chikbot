@@ -18,7 +18,6 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 * [References](https://github.com/jsgit21/Chikbot/blob/master/README.md#references) 
 
 ### User Stories
-[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
 
 - [x] Implement basic commands/functionality for the bot to be utilized by users in the discord
 - [x] Per user Wordle score tracking
