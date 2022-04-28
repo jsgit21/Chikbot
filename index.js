@@ -102,13 +102,13 @@ const commandList = {
     "$hi":"Say hello to Chikbot",
     "$ping":"Pongs back with latency between messages",
     "$chiken":"Bwakk bwakk!",
-    "$keys":"Who got the key?",
-    "$dadjoke":"Get a random dad joke!",
     "$breakchikbot":"That's rude.",
+    "$dadjoke":"Get a random dad joke!",
     "$wstats":"Check for your wordle stats tracked in discord",
-    "$wstats <name>":"Check another user's wordle stats tracked in discord",
+    "$wstats <name>":"Check another user's Wordle stats tracked in discord",
     "$qstats":"Check for your quordle stats tracked in discord",
-    "$qstats <name>":"Check another user's quordle stats tracked in discord",
+    "$qstats <name>":"Check another user's Quordle stats tracked in discord",
+    "[[<name>]]":"Surround the name of a Magic the Gathering card in double brackets to have Chikbot find a card that best matches the name"
 }
 const wordleRegex = new RegExp('Wordle [0-9]{3}([0-9]?){2} (X|x|[1-6])/6');
 const mtgregex = new RegExp("\\[\\[.*\\]\\]");
@@ -379,7 +379,6 @@ client.on("messageCreate", function(message) {
             if (result['rows'].length != 0) {
                 if (playerstats.playedtoday) {
                     message.channel.send(`Sorry ${tagUser} - It looks like you've already submitted a Wordle score today.`);
-                    client.end();
                     return;
                 }
             }
@@ -393,7 +392,6 @@ client.on("messageCreate", function(message) {
                 }
                 message.channel.send(`Thanks ${tagUser} - Your score has been recorded. You can use **$wstats** to see your score distribution.`);
                 //console.log(result);
-                client.end();
             });
 
         });
@@ -515,7 +513,7 @@ client.on("messageCreate", function(message) {
 
             query = `INSERT INTO quordle (four, five, six, seven, eight, nine, total, userid, name, playedtoday) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) ON CONFLICT (userid) DO UPDATE SET four=quordle.four+${quordleData[0]}, five=quordle.five+${quordleData[1]}, six=quordle.six+${quordleData[2]}, seven=quordle.seven+${quordleData[3]}, eight=quordle.eight+${quordleData[4]}, nine=quordle.nine+${quordleData[5]}, total=quordle.total+1, playedtoday='t'`;
         
-            client.query(query, quordleData, function (err, result) {
+            db.query(query, quordleData, function (err, result) {
                 if (err) throw err;
                 for (let row of result.rows) {
                     console.log(JSON.stringify(row));
