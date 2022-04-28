@@ -16,7 +16,6 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 - [x] Implement basic commands/functionality for the bot to be utilized by users in the discord
 - [x] Per user Wordle score tracking
 
-### Additional User Stories
 - [x] Quordle support (Alteration of Wordle, web browser game)
 - [x] Magic The Gathering API Implementation
   - [x] Search for Magic The Gathering playing cards and display them to the user
