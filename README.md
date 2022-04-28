@@ -4,8 +4,9 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 # Table of Contents
 * [User Stories](https://github.com/jsgit21/Chikbot/blob/master/README.md#user-stories)
 * [Getting Started](https://github.com/jsgit21/Chikbot/blob/master/README.md#getting-started)
-  *  [List of Commands](https://github.com/jsgit21/Chikbot/blob/master/README.md#commands)
+  * [List of Commands](https://github.com/jsgit21/Chikbot/blob/master/README.md#commands)
 * [Wordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#wordle-support)
+  * [Official Wordle Scoring](https://github.com/jsgit21/Chikbot/blob/master/README.md#for-reference-here-is-the-graph-that-the-official-wordle-displays-for-you-as-it-tracks-your-score-on-the-website) 
 * [Quordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#extending-to-quordle)
 * [Validation and Error checking](https://github.com/jsgit21/Chikbot/blob/master/README.md#validation-and-error-checking-)
 * [Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api)
@@ -52,7 +53,7 @@ The meaning of the above guess distribution;
 * **5/6: 1**   *one game solved in 5 guesses*
 * **6/6: 2**   *two games solved in 6 guesses*
 
-**Now, lets see how it works with Chikbot**
+#### Now, lets see how it works with Chikbot
 
 Here you can see Chikbot checks the chat for any pasted Wordle scores, utilizing regex and some other checks and balances to make sure the score that was posted is how a pasted wordle score should look.
 
