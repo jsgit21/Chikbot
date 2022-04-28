@@ -44,6 +44,7 @@ Here's a basic idea of the commands that Chikbot is currently supporting:
 
 # Wordle Support
 [Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
+
 The driving idea behind me building Chikbot in the first place was to gather Wordle scores posted by friends in the discord channel. I wanted to be able to track it so we could enjoy some friendly competition. If you're not familiar with sharing Wordle scores, Wordle provides a 1-click button that copies the "Wordle score" to your clipboard so you can share with friends. It's only descriptive enough to see the score, but doesn't spoil what the daily word is. I figured, we're already going to share our scores, why not have an in-house tracking system so you can quickly check your progress?
 
 #### For reference, here is the graph that the Official Wordle displays for you as it tracks your score on the website:
