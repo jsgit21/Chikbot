@@ -103,8 +103,8 @@ You can search for any card by wrapping the name you want to search in double br
 
 If you search for a card and there is an exact match or only one match, there will be no other posibilities listed below
 
-![Searching for a specific MTG card](./Images/mtg2.png)
+![Searching for any MTG card](./Images/mtg2.png)
 
 Of course, if you search for a card that doesn't exist, Chikbot will let you know.
 
-![Searching for a card that doesn't exist](./Images/mtg3.png)
+![Searching for any MTG card](./Images/mtg3.png)
