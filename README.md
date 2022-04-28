@@ -26,8 +26,10 @@ Here's a basic idea of the commands that Chikbot is currently supporting:
 
 # Wordle Support
 
-The driving idea behind me building Chikbot in the first place was to gather Wordle scores posted by friends in the discord channel. I wanted to be able to track it so we could enjoy some friendly competition. 
+The driving idea behind me building Chikbot in the first place was to gather Wordle scores posted by friends in the discord channel. I wanted to be able to track it so we could enjoy some friendly competition.
+
 **For reference, here is the graph that Wordle displays for you to track your own scores:**
+
 ![Official wordle scores](./Images/WordleStatsReal.png)
 
 Here you can see Chikbot checks the chat for any pasted Wordle scores, utilizing regex and some other checks and balances to make sure the score that was posted is how a pasted wordle score should look.
