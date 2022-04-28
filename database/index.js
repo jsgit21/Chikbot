@@ -11,7 +11,6 @@ const pool = new Pool({
 
 module.exports = {
     query: (text, params, callback) => {
-        const start = Date.now()
         return pool.query(text, params, callback)
     }
 }
