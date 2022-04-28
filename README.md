@@ -1,5 +1,5 @@
 # Chikbot
-Chikbot was born as a passion project around the time Wordle became popular. For a while I knew I wanted to build a Discord bot and experiment with what potential it could bring to my Discord server. The initial inspiration was being able to track individual's Wordle scores from day to day as a bit of friendly competition. After getting comfortable with the Node.js module known as Discord.js. I began to implement other functionality as well as work to have it fully hosted on Heroku utilizing a PostgreSQL database for storing my data.
+Chikbot was born as a passion project a short time after Wordle became popular. For a while I knew I wanted to build a Discord bot and experiment with what potential it could bring to my Discord server. The initial inspiration was being able to track any user's Wordle scores from day to day as a bit of friendly competition. After getting comfortable with the Node.js module known as Discord.js I began to implement other functionality and then also work to have it fully hosted on Heroku utilizing a PostgreSQL database for storing my data.
 
 # Table of Contents
 * [User Stories](https://github.com/jsgit21/Chikbot/blob/master/README.md#user-stories)
