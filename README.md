@@ -108,3 +108,12 @@ If you search for a card and there is an exact match or only one match, there wi
 Of course, if you search for a card that doesn't exist, Chikbot will let you know.
 
 ![Searching for any MTG card](./Images/mtg3.png)
+
+# Dad Jokes
+
+# References
+Discord.js \t\t https://discord.js.org/#/
+Wordle \t\t\t https://www.nytimes.com/games/wordle/index.html
+Quordle \t\t\t
+Magic The Gathering API \t https://docs.magicthegathering.io/
+Dad Joke API \t\t https://icanhazdadjoke.com/api
