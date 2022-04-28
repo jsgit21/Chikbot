@@ -18,4 +18,8 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 
 Initially, when I was learning how to build my discord bot I started with the basics. A few commands, and of course a few of them to mess with my friends while I was getting myself situated.
 
-![Intro](./Images/Intro1.png)
+![Using a very basic command for Chikbot](./Images/Intro1.png)
+
+Here's a basic idea of the commands that Chikbot is currently supporting:
+
+![Basic list of commands for Chikbot](./Images/Intro2.png)
