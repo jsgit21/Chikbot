@@ -107,10 +107,9 @@ Thankfully BobTheCat is much better at quordle than myself, as you can tell by t
 
 Luckily I have a great group of friends that wanted to see just how quickly they could break my bot as I was rolling the wordle functionality out, and I'll admit they were pretty creative!
 
-* Names that are too long to be discord names instantly fail when searching for other user stats.
-
+* Names searched that are too long to be discord names instantly fail.
+* Names searched that contain invalid characters according to discords own naming convention instantly fail.
 * The bot is protected from breaking when attempting to pass in random vegetable emojis, or any emojis for that matter.
-
 * The bot will not except your game scores if they are not in the expected format provided from the official game.
 
 Another thing to consider is parsing these scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle/Quordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
