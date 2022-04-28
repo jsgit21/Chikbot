@@ -38,7 +38,7 @@ Here you can see Chikbot checks the chat for any pasted Wordle scores, utilizing
 
 ![Submitting a wordle score](./Images/wordle1.png)
 
-After submitting your score, the database will recognize wether or not you've already submitted for that day. Each day the "played" tracker will reset automatically, allowing you to submit another score.
+After submitting your score, the database will recognize whether or not you've already submitted for that day. Each day the "played" tracker will reset automatically, allowing you to submit another score.
 
 ![Trying to submit more than one wordle score in a day](./Images/wordle2.png)
 
