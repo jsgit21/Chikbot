@@ -13,3 +13,9 @@ Chikbot was born as a passion project around the time Wordle became popular. For
   - [x] Search for Magic The Gathering playing cards and display them to the user
 - [ ] Create functionality for users to create Tasks/Goals list
 - [ ] Implement self-assign user roles through Chikbot
+
+# Getting Started
+
+Initially, when I was learning how to build my discord bot I started with the basics. A few commands, and of course a few of them to mess with my friends while I was getting myself situated.
+
+![Intro](./Images/Intro1.png)
