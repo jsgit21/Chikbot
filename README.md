@@ -9,7 +9,7 @@ Chikbot was born as a passion project around the time Wordle became popular. For
   * [Official Wordle Scoring](https://github.com/jsgit21/Chikbot/blob/master/README.md#for-reference-here-is-the-graph-that-the-official-wordle-displays-for-you-as-it-tracks-your-score-on-the-website) 
   * [How Chikbot Handles Scoring](https://github.com/jsgit21/Chikbot/blob/master/README.md#now-lets-see-how-it-works-with-chikbot)
 * [Quordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#extending-to-quordle)
-* [Validation and Error checking](https://github.com/jsgit21/Chikbot/blob/master/README.md#validation-and-error-checking-)
+* [Validation and Error checking](https://github.com/jsgit21/Chikbot/blob/master/README.md#-validation-and-error-checking-)
 * [Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api)
 * [Dad Jokes API](https://github.com/jsgit21/Chikbot/blob/master/README.md#dad-jokes)
 * [The Future of Chikbot](https://github.com/jsgit21/Chikbot/blob/master/README.md#the-future-of-chikbot)
