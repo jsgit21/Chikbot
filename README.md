@@ -30,19 +30,15 @@ The driving idea behind me building Chikbot in the first place was to gather Wor
 
 **For reference, here is the graph that the OFFICIAL Wordle displays for you as it tracks your score on the website:**
 
-The meaning of guess distribution; 
-
-If you have 5 games played
-
-Two of those games took you 4 guesses
-
-Three of those games took you 5 guesses
-
-* 4/6: 2 *two games solved in 4 guesses*
-
-* 5/6: 3 *three games solved in 5 guesses*
-
 ![Official wordle scores](./Images/WordleStatsReal.png)
+
+The meaning of the above guess distribution; 
+* 1/6: 1 *one game solved in 1 guess*
+* 2/6: 1 *one game solved in 2 guesses*
+* 3/6: 4 *four games solved in 3 guesses*
+* 4/6: 1 *one game solved in 4 guesses*
+* 5/6: 1 *one game solved in 5 guesses*
+* 6/6: 2 *two games solved in 6 guesses*
 
 **Now, lets see how it works with Chikbot**
 
