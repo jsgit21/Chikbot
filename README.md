@@ -4,6 +4,7 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 # Table of Contents
 * [User Stories](https://github.com/jsgit21/Chikbot/blob/master/README.md#user-stories)
 * [Getting Started](https://github.com/jsgit21/Chikbot/blob/master/README.md#getting-started)
+..* [List of Commands](https://github.com/jsgit21/Chikbot/blob/master/README.md#commands)
 * [Wordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#wordle-support)
 * [Quordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#extending-to-quordle)
 * [Validation and Error checking](https://github.com/jsgit21/Chikbot/blob/master/README.md#validation-and-error-checking-)
