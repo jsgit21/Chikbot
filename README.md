@@ -7,11 +7,14 @@ Chikbot was born as a passion project around the time Wordle became popular. For
   * [List of Commands](https://github.com/jsgit21/Chikbot/blob/master/README.md#commands)
 * [Wordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#wordle-support)
   * [Official Wordle Scoring](https://github.com/jsgit21/Chikbot/blob/master/README.md#for-reference-here-is-the-graph-that-the-official-wordle-displays-for-you-as-it-tracks-your-score-on-the-website) 
+  * [How Chikbot Handles Scoring]
 * [Quordle Support](https://github.com/jsgit21/Chikbot/blob/master/README.md#extending-to-quordle)
 * [Validation and Error checking](https://github.com/jsgit21/Chikbot/blob/master/README.md#validation-and-error-checking-)
 * [Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api)
 * [Dad Jokes API](https://github.com/jsgit21/Chikbot/blob/master/README.md#dad-jokes)
 * [The Future of Chikbot](https://github.com/jsgit21/Chikbot/blob/master/README.md#the-future-of-chikbot)
+  * [Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api-1)
+  * [List of Goals](https://github.com/jsgit21/Chikbot/blob/master/README.md#creating-a-list-of-goals)
 
 ### User Stories
 
