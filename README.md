@@ -56,8 +56,7 @@ If you search for a user incorrectly or search for someone who isn't in the data
 
 ![searching for a user that doesn't exist](./Images/wordle5.png)
 
-❗❗ 
-### Some considerations to be aware of
+### Some considerations to be aware of ❗❗ 
 
 Parsing wordle scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle), there's no way to check if the pasted score is the official pasted score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
 
