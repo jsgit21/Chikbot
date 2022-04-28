@@ -18,6 +18,7 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 * [References](https://github.com/jsgit21/Chikbot/blob/master/README.md#references) 
 
 ### User Stories
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
 
 - [x] Implement basic commands/functionality for the bot to be utilized by users in the discord
 - [x] Per user Wordle score tracking
@@ -30,6 +31,7 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 - [ ] Implement self-assign user roles through Chikbot
 
 # Getting Started
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
 
 Initially, when I was learning how to build my discord bot I started with the basics. A few commands, and of course a few of them to mess with my friends while I was getting myself situated.
 
@@ -42,7 +44,7 @@ Here's a basic idea of the commands that Chikbot is currently supporting:
 ![Basic list of commands for Chikbot](./Images/Intro2.png)
 
 # Wordle Support
-
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
 The driving idea behind me building Chikbot in the first place was to gather Wordle scores posted by friends in the discord channel. I wanted to be able to track it so we could enjoy some friendly competition. If you're not familiar with sharing Wordle scores, Wordle provides a 1-click button that copies the "Wordle score" to your clipboard so you can share with friends. It's only descriptive enough to see the score, but doesn't spoil what the daily word is. I figured, we're already going to share our scores, why not have an in-house tracking system so you can quickly check your progress?
 
 #### For reference, here is the graph that the Official Wordle displays for you as it tracks your score on the website:
@@ -82,6 +84,8 @@ If you search for a user incorrectly or search for someone who isn't in the data
 ![searching for a user that doesn't exist](./Images/wordle5.png)
 
 # Extending to Quordle
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
+
 Quordle... was something that was brought to my attention, essentially being an extension of Wordle. Many of you know that after Wordle, many Wordle-inspired games started spreading like wildfire. Essentially Quordle is where you try to solve four different Wordle games at the same time. There just so happens to now be an Octordle and Sedecordle... which, Chikbot told me he doesn't wan't to deal with parsing those!
 
 Here you can see similar to Wordle, Chikbot is keeping an eye out for any official Quordle scores that are posted. This also utilizes regex and other checks to make sure it is in the official format.
@@ -99,6 +103,7 @@ Thankfully BobTheCat is much better at quordle than myself, as you can tell by t
 ![Checking a friends Quordle score](./Images/quordle3.png)
 
 # ❗ Validation and Error checking ❗
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
 
 Luckily I have a great group of friends that wanted to see just how quickly they could break my bot as I was rolling the wordle functionality out, and I'll admit they were pretty creative!
 
@@ -111,6 +116,8 @@ Luckily I have a great group of friends that wanted to see just how quickly they
 Another thing to consider is parsing these scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle/Quordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
 
 # Magic The Gathering API
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
+
 Magic The Gathering is a strategy card game that I enjoy playing with friends from time to time. Although there are already bots out there that do this kind of thing very well, I wanted to have my own home grown solution to sharing/talking about cards among friends. So I utilized an neat API to help me search for cards and display them.
 
 #### \[\[\<name\>\]\]
@@ -127,11 +134,15 @@ Of course, if you search for a card that doesn't exist, Chikbot will let you kno
 ![Searching for any MTG card](./Images/mtg3.png)
 
 # Dad Jokes
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
+
 There's not much to say when it comes to a good dad joke, One of my friends mentioned it and I thought it would be fun so I found an API for it and did a quick implementation in the early stages of Chikbot!
 
 ![Getting a dad joke from Chikbot](./Images/dadjoke.png)
 
 # The Future of Chikbot
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
+
 I am first focusing on tweaking my code to ensure that is manageable and scalable before I add many more features. This is not only a passion project, but a way for me to learn and explore. Here are some things I'd like to implement as I continue to grow Chikbot in my spare time. 
 
 ### Magic The Gathering API
