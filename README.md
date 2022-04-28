@@ -162,6 +162,8 @@ My discord houses a lot of people who are primarily gamers at heart. It was sugg
 * $goals delete <goal number> - remove a goal from your list
 
 # References
+[Back to the top](https://github.com/jsgit21/Chikbot/blob/master/README.md#chikbot)
+ 
 Discord.js https://discord.js.org/#/
 
 Wordle https://www.nytimes.com/games/wordle/index.html
