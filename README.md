@@ -3,11 +3,17 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 
 # Table of Contents
 [Getting Started]()
+
 [Wordle Support]()
+
 [Quordle Support]()
+
 [Validation and Error checking]()
+
 [Magic The Gathering API](https://github.com/jsgit21/Chikbot/blob/master/README.md#magic-the-gathering-api)
+
 [Dad Jokes API]()
+
 [The Future of Chikbot]()
 
 ### User Stories
