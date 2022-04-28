@@ -28,7 +28,7 @@ Here's a basic idea of the commands that Chikbot is currently supporting:
 
 The driving idea behind me building Chikbot in the first place was to gather Wordle scores posted by friends in the discord channel. I wanted to be able to track it so we could enjoy some friendly competition.
 
-**For reference, here is the graph that Wordle displays for you to track your own scores:**
+**For reference, here is the graph that Wordle displays for you as it tracks your score:**
 
 ![Official wordle scores](./Images/WordleStatsReal.png)
 
