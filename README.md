@@ -25,6 +25,7 @@ Chikbot was born as a passion project around the time Wordle became popular. For
 - [x] Quordle support (Alteration of Wordle, web browser game)
 - [x] Magic The Gathering API Implementation
   - [x] Search for Magic The Gathering playing cards and display them to the user
+  - [ ] Quicksearch for card suggestion list
 - [x] Dad Joke API Implementation
 - [ ] Create functionality for users to create Tasks/Goals list
 - [ ] Implement self-assign user roles through Chikbot
