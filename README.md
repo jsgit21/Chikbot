@@ -110,6 +110,9 @@ Of course, if you search for a card that doesn't exist, Chikbot will let you kno
 ![Searching for any MTG card](./Images/mtg3.png)
 
 # Dad Jokes
+There's not much to say when it comes to a good dad joke, One of my friends mentioned it and I thought it would be fun so I found an API for it and did a quick implementation in the early stages of Chikbot!
+
+![Getting a dad joke from Chikbot](./Images/dadjoke.png)
 
 # References
 Discord.js https://discord.js.org/#/
