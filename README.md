@@ -1,5 +1,5 @@
 # Chikbot
-Chikbot was born as a passion project around the time Wordle became popular. For a while I knew I wanted to build a Discord bot and experiment with what potential it could bring to my Discord server. The initial inspiration was being able to track individual's Wordle scores from day to day as a bit of friendly competition. After getting comfortable with the Node.js module known as Discord.js. I began to implement other functionality as well as work to have it fully hosted on Heroku utilizing a PostgreSQL database for storing my data.
+Chikbot was born as a passion project a short time after Wordle became popular. For a while I knew I wanted to build a Discord bot and experiment with what potential it could bring to my Discord server. The initial inspiration was being able to track any user's Wordle scores from day to day as a bit of friendly competition. After getting comfortable with the Node.js module known as Discord.js I began to implement other functionality and then also work to have it fully hosted on Heroku utilizing a PostgreSQL database for storing my data.
 
 # Table of Contents
 * [User Stories](https://github.com/jsgit21/Chikbot/blob/master/README.md#user-stories)
@@ -111,7 +111,7 @@ Luckily I have a great group of friends that wanted to see just how quickly they
 * Names searched that are too long to be discord names instantly fail.
 * Names searched that contain invalid characters according to discords own naming convention instantly fail.
 * The bot is protected from breaking when attempting to pass in random vegetable emojis, or any emojis for that matter.
-* The bot will not except your game scores if they are not in the expected format provided from the official game.
+* The bot will not accept your game scores if they are not in the expected format provided from the official game.
 
 Another thing to consider is parsing these scores in discord and tracking the data is simply for fun. While I do validate the data that is being parsed and also limit it to one submission per day (just like the daily Wordle/Quordle), there's no way to check if the pasted score is the official score. Meaning, someone can mimick the score to make it look like they are doing really well and submit it. For the scope of Chikbot, and the fact that it is within a community discord, it's reliant on honest people just wanting to have some fun when sharing with friends.
 
