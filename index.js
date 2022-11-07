@@ -9,6 +9,7 @@ const mtg_cardsearch = require('./components/mtg_cardsearch');
 
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"], restTimeOffset: 0}); //create new client
 
+//Comment for updating to redeploy for heroku fix
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
