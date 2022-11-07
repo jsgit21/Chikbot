@@ -62,7 +62,8 @@ exports.cardSearch = (channel, message) => {
 
                 const embed = new MessageEmbed()
                 embed.setImage(url);
-                channel.send({embeds: [embed]});
+                const embedded_image = await channel.send({embeds: [embed]});
+
                 // const attachment = new MessageAttachment(url);
                 // message.channel.send({
                 //     files: [attachment],
@@ -77,21 +78,24 @@ exports.cardSearch = (channel, message) => {
                         suggested = cards.length;
                     }
 
-                    for (i = 1; i < suggested; i++){
+                    for (i = 1; i <= suggested; i++){
                         if (cardFound != cards[i].name){
                             mySet.add(cards[i].name);
                         }
                     }
 
+                    emojiset = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣']
                     const setIterator = mySet.values();
                     var outputString = "Did you mean: \n";
                     for (i=0; i < mySet.size; i++) {
-                        outputString = outputString + "> "+setIterator.next().value+"\n";
+                        outputString = outputString + "> "+(i+1)+". "+setIterator.next().value+"\n";
+                        //embedded_image.react(emojiset[i]);
                     }
                     //console.log(outputString);
                     if(mySet.size > 0) {
                         channel.send(outputString);
                     }
+
                 }
 
                 

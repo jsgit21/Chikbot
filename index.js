@@ -7,7 +7,7 @@ const { Pool } = require('pg');
 const channel_id = require('./data/channel_id');
 const mtg_cardsearch = require('./components/mtg_cardsearch');
 
-const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]}); //create new client
+const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"], restTimeOffset: 0}); //create new client
 
 
 client.on('ready', () => {
